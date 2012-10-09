@@ -1,0 +1,1 @@
+This project contains the sample app from the [*Ruby on Rails tutorial*](http://railstutorial.org) by Michael Hartl
