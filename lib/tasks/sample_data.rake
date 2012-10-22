@@ -1,16 +1,20 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
+    delete_users
     make_users
     make_microposts
     make_relationships
   end
 end
 
-def make_users
+def delete_users
   User.all.each do |a|
     a.delete
   end
+end
+
+def make_users
   admin = User.create!(name: "Example user",
                        email: "example@example.com",
                        password: "foobar",
@@ -38,7 +42,7 @@ def make_relationships
   user = users.first
   followed_users = users[2..50]
   followers = users[3..40]
-  followed_users.each { |followed| user.follow!(followed)}
-  followers.each { |follower| follower.follow!(user )}
+  followed_users.each { |followed| user.follow!(followed) }
+  followers.each { |follower| follower.follow!(user) }
 end
 
