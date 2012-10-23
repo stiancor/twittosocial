@@ -36,7 +36,7 @@ describe Micropost do
   end
 
   describe "with blank content" do
-    before { @micropost.content = "a"*141 }
+    before { @micropost.content = "a"*251 }
     it { should_not be_valid }
   end
 
