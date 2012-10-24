@@ -1,1 +1,1 @@
-This project contains the sample app from the [*Ruby on Rails tutorial*](http://railstutorial.org) by Michael Hartl
+This project originaly contained the sample app from the [*Ruby on Rails tutorial*](http://railstutorial.org) by Michael Hartl. I have however introduced more functionality, and there is more to come.
