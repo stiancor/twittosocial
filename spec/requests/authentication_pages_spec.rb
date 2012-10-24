@@ -28,7 +28,7 @@ describe "AuthenticationPages" do
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
       before { sign_in user }
-      it { should have_selector('title', text: user.name) }
+      it { should have_link("view my profile") }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Sign out', href: signout_path) }
       it { should have_link('Settings', href: edit_user_path(user)) }
@@ -54,8 +54,9 @@ describe "AuthenticationPages" do
         end
 
         describe "after signing in" do
-          it "it should render the desired protected page" do
-            page.should have_selector('title', text: 'Edit user')
+
+          describe "it should render the desired protected page" do
+            it { page.should have_selector('title', text: 'Edit user') }
           end
 
           describe "when signing in again" do
@@ -66,9 +67,7 @@ describe "AuthenticationPages" do
               fill_in "Password", with: user.password
               click_button "Sign in"
             end
-            it "should render the default (profile) page " do
-              page.should have_selector('title', text: user.name)
-            end
+            it { should have_link("view my profile") }
           end
         end
 
