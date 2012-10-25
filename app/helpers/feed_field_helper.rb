@@ -11,8 +11,10 @@ module FeedFieldHelper
     i = 0
     returnArray = []
     content.split(' ').each do |s|
-      if s.match /http:\/\/.*?/
+      if s.match /\A(?:https?:\/\/)\S+\b/
         returnArray[i] = "<a href='#{s}' target='_blank'>#{s}</a>"
+      elsif s.match /\Awww\.\S+\b/
+        returnArray[i] = "<a href='http://#{s}' target='_blank'>#{s}</a>"
       else
         returnArray[i] = s
       end
