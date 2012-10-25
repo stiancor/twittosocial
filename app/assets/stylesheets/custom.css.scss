@@ -137,21 +137,27 @@ aside {
   margin-right: 10px;
 }
 
-.stats { overflow: auto; a{
-  float: left;
-  padding: 0 10px;
-  border-left: 1px solid $grayLighter;
-  color: gray;
-  &:first-child {
-    padding-left: 0;
-    border: 0; }
-  &:hover {
-    text-decoration: none;
-    color: $blue;
-  } }
+.stats {
+  overflow: auto;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: $blue;
+    }
+  }
   strong {
     display: block;
-  } }
+  }
+}
+
 .user_avatars {
   overflow: auto;
   margin-top: 10px;
@@ -191,7 +197,7 @@ input, textarea, select, .uneditable-input {
   li {
     overflow: auto;
     padding: 10px 0;
-    border-top: 1 px solid $grayLighter;
+    border-top: 1px solid $grayLighter;
     &:last-child {
       border-bottom: 1px solid $grayLighter;
     }
@@ -205,20 +211,45 @@ input, textarea, select, .uneditable-input {
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
-  } }
+  }
+}
+
 .content {
   display: block;
 }
+
 .timestamp {
   color: $grayLight;
 }
+
 .gravatar {
   float: left;
   margin-right: 10px;
 }
+
 aside {
   textarea {
     height: 100px;
     margin-bottom: 5px;
   }
 }
+
+div.feedback {
+  display: block;
+  div.like {
+      float: right;
+  }
+}
+
+p.number_like {
+  font-style: italic;
+  color: $grayLight;
+}
+
+span.countdown {
+  display: inline;
+  color: $grayLight;
+  font-size: 1.3em;
+  padding-left: 10px;
+}
+
