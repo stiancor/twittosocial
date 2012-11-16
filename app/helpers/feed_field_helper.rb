@@ -26,5 +26,6 @@ module FeedFieldHelper
   def escape_html(content)
     content.gsub!('<', '&lt;')
     content.gsub!('>', '&gt;')
+    content
   end
 end
