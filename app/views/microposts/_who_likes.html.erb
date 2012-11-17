@@ -1,0 +1,10 @@
+<% if !@users.empty? %>
+    <ul class="users">
+      <% @users.each do |user| %>
+          <li>
+            <%= gravatar_for user, options = {size: 50, image_icon: 'monsterid'} %>
+            <%= link_to user.name, user %>
+          </li>
+      <% end %>
+    </ul>
+<% end %>

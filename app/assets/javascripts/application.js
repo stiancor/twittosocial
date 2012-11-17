@@ -15,14 +15,14 @@
 //= require bootstrap
 //= require_tree .
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     updateCountdown();
     $('.message').change(updateCountdown);
     $('.message').keyup(updateCountdown);
 });
 
 function updateCountdown() {
-    // 140 is the max message length
+    // 250 is the max message length
     var remaining = 250 - jQuery('.message').val().length;
     jQuery('.countdown').text(remaining);
 }

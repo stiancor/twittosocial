@@ -1,0 +1,8 @@
+$('#modal-window-likes-<%= @micropost.id%>').modal("show");
+$('.modal-body').html('<%= escape_javascript(render :partial => 'who_likes', :object => @users) %>');
+$('.modal-button').click(function(){
+    var clicked = $(this);
+    clicked.parent().parent().modal("hide");
+});
+
+
