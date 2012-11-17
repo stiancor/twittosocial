@@ -12,15 +12,29 @@ module FeedFieldHelper
     returnArray = []
     content.split(' ').each do |s|
       if s.match /\A(?:https?:\/\/)\S+\b/
-        returnArray[i] = "<a href='#{s}' target='_blank'>#{s}</a>"
+        url = remove_last_punction_if_it_exists(s)
+        punction = add_last_punction_if_it_existed(s)
+        returnArray[i] = "<a href='#{url}' target='_blank'>#{url}</a>#{punction}"
       elsif s.match /\Awww\.\S+\b/
-        returnArray[i] = "<a href='http://#{s}' target='_blank'>#{s}</a>"
+        url = remove_last_punction_if_it_exists(s)
+        punction = add_last_punction_if_it_existed(s)
+        returnArray[i] = "<a href='http://#{url}' target='_blank'>#{url}</a>#{punction}"
       else
         returnArray[i] = s
       end
       i += 1
     end
     returnArray.join(' ')
+  end
+
+  def remove_last_punction_if_it_exists(str)
+    newStr = str.sub(/[?.!,;]?$/, '') || str
+    newStr
+  end
+
+  def add_last_punction_if_it_existed(str)
+    punction = str.match(/[?.!,;]?$/) || ''
+    punction
   end
 
   def escape_html(content)
