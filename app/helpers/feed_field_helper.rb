@@ -1,13 +1,13 @@
 module FeedFieldHelper
   def format_msg(content)
     if !content.match /<|>/
-      create_links_if_present(content)
+      parse_words_one_by_one(content)
     else
       escape_html(content)
     end
   end
 
-  def create_links_if_present(content)
+  def parse_words_one_by_one(content)
     i = 0
     returnArray = []
     content.split(' ').each do |s|
