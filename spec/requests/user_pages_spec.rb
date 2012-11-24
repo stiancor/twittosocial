@@ -140,7 +140,7 @@ describe "User pages" do
       end
       describe "after submission" do
         before do
-          fill_in "Codeword", with: "foobar"
+          fill_in "Secret code word", with: "foobar"
           click_button submit
         end
         it { should have_selector('title', text: 'Sign up') }
@@ -151,7 +151,7 @@ describe "User pages" do
 
     describe "with valid information" do
       before do
-        fill_in "Codeword", with: "foobar"
+        fill_in "Secret code word", with: "foobar"
         fill_in "Name", with: "Example User"
         fill_in "Email", with: "example@example.com"
         fill_in "Username", with: "username"

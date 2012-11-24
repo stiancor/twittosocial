@@ -6,7 +6,7 @@
     <%= form_for @user do |f| %>
         <%= render 'shared/multiple_form_error_messages', object: @domain_objects %>
         <%= fields_for @codeword do |c| %>
-            <%= c.label :codeword %>
+            <%= c.label :codeword, "Secret code word" %>
             <%= c.text_field :codeword %>
         <% end %>
         <%= f.label :name %>
