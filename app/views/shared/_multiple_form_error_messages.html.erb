@@ -1,0 +1,12 @@
+<% if has_errors_in_any_objects?(object) %>
+    <div id="error_explanation">
+      <div class="alert alert-error">
+        The form contains errors
+      </div>
+      <ul>
+        <% object.each do |o| %>
+            <%= render 'shared/error_message', object: o %>
+        <% end %>
+      </ul>
+    </div>
+<% end %>

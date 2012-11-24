@@ -10,6 +10,7 @@ describe "User pages" do
 
     before(:all) {
       30.times { FactoryGirl.create(:user) }
+      Codeword.create(codeword: "foobar")
     }
 
     after(:all) {
@@ -138,7 +139,10 @@ describe "User pages" do
         expect { click_button submit }.not_to change(User, :count)
       end
       describe "after submission" do
-        before { click_button submit }
+        before do
+          fill_in "Codeword", with: "foobar"
+          click_button submit
+        end
         it { should have_selector('title', text: 'Sign up') }
         it { should have_content('error') }
         it { should_not have_content('Password digest') }
@@ -147,6 +151,7 @@ describe "User pages" do
 
     describe "with valid information" do
       before do
+        fill_in "Codeword", with: "foobar"
         fill_in "Name", with: "Example User"
         fill_in "Email", with: "example@example.com"
         fill_in "Username", with: "username"

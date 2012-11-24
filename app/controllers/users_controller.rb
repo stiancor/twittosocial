@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include UsersHelper
 
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_filter :correct_user, only: [:edit, :update]
@@ -15,11 +16,17 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @codeword = Codeword.new
+    @domain_objects = [@user, @codeword]
   end
 
   def create
     @user = User.new(params[:user])
-    if @user.save
+    @codeword = Codeword.new(params[:codeword])
+    @domain_objects = [@codeword, @user]
+    if !@codeword.valid? || non_existing_codeword?(@codeword)
+      render 'new'
+    elsif @user.save
       sign_in @user
       flash[:success] = "Welcome to TwittoSocial!"
       redirect_to @user

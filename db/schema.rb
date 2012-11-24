@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117233452) do
+ActiveRecord::Schema.define(:version => 20121123182240) do
+
+  create_table "codewords", :force => true do |t|
+    t.string   "codeword"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "likes", :force => true do |t|
     t.integer  "micropost_id"
