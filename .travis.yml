@@ -4,8 +4,7 @@ rvm:
   - "1.9.2"
 env:
   - DB=sqlite
-  - DB=postgresql
-before_script:
+script:
   - RAILS_ENV=development bundle exec rake --trace db:migrate
   - bundle exec rake db:test:prepare
   - bundle exec rake rspec spec
