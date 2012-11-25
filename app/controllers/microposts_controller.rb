@@ -1,4 +1,5 @@
 class MicropostsController < ApplicationController
+  include MicropostHelper
 
   before_filter :signed_in_user
   before_filter :correct_user, only: :destroy
@@ -6,6 +7,7 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(params[:micropost])
     if @micropost.save
+      send_email_if_registered_usernames(current_user.username, @micropost.content)
       flash[:success] = "Micropost created!"
       redirect_to root_path
     else
