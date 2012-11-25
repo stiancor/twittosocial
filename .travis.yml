@@ -6,5 +6,5 @@ env:
   - DB=sqlite
 script:
   - RAILS_ENV=development bundle exec rake --trace db:migrate
-  - RAILS_ENV=development bundle exec rake db:test:prepare
-  - RAILS_ENV=development bundle exec rspec spec
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec spec
