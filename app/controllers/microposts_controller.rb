@@ -12,6 +12,7 @@ class MicropostsController < ApplicationController
       redirect_to root_path
     else
       @feed_items = []
+      @usernames = User.all.collect { |user| user.username.to_s }.sort
       render 'static_pages/home'
     end
   end
