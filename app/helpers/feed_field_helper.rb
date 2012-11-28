@@ -8,9 +8,8 @@ module FeedFieldHelper
   end
 
   def parse_words_one_by_one(content)
-    i = 0
     returnArray = []
-    content.split(' ').each do |s|
+    content.split(' ').each_with_index  do |s, i|
       if s.match /\A(?:https?:\/\/)\S+\b/
         url = remove_last_punction_if_it_exists(s)
         punction = add_last_punction_if_it_existed(s)
@@ -22,19 +21,16 @@ module FeedFieldHelper
       else
         returnArray[i] = s
       end
-      i += 1
     end
     returnArray.join(' ')
   end
 
   def remove_last_punction_if_it_exists(str)
-    newStr = str.sub(/[?.!,;]?$/, '') || str
-    newStr
+    str.sub(/[?.!,;]?$/, '') || str
   end
 
   def add_last_punction_if_it_existed(str)
-    punction = str.match(/[?.!,;]?$/) || ''
-    punction
+    str.match(/[?.!,;]?$/) || ''
   end
 
   def escape_html(content)
