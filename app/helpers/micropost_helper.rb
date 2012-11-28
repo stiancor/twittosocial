@@ -14,7 +14,7 @@ module MicropostHelper
   end
 
   def extract_user_names(message)
-    message.scan(/(\s@\w+|\A@\w+)/).collect{|x| x[0].strip}.collect{|y| y.gsub('@', '')}.uniq{|z| z}
+    message.scan(/(\s@\w+|\A@\w+)/).collect{|x| x[0].strip.gsub('@','')}.uniq{|z| z}
   end
 
   def get_emails(user_names)
