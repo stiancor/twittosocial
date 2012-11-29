@@ -3,7 +3,7 @@ require 'rest_client'
 module MailHelper
 
   def send_simple_message (sender, recipients, message)
-    RestClient.post "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0@api.mailgun.net/v2/samples.mailgun.org/messages",
+    RestClient.post "https://api:#{ENV[MAILGUN_KEY]}@api.mailgun.net/v2/#{ENV[MAILGUN_SERVER]}/messages",
                     :from => "Twittosocial <no-reply@twittosocial.com>",
                     :to => recipients.join(','),
                     :subject => "@#{sender} mentioned you at Twittosocial",
