@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "spec_helper"
 
 describe MicropostHelper do
@@ -26,5 +27,9 @@ describe MicropostHelper do
 
   describe "no usernames in string without usernames" do
     it { extract_user_names("This string contains no usernames @, that is for sure").length.should == 0}
+  end
+
+  describe "micropost with three usernames" do
+    it { extract_user_names("Vi planlegger julebordet og er usikker på om @benty @chaub og @marie liker pinnekjøtt... Yes or no").length.should == 3}
   end
 end
