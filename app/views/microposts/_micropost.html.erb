@@ -1,4 +1,4 @@
-<li>
+<li <%= micropost_li_class(micropost)%>>
   <span class="content"><%= format_msg(micropost.content).html_safe %></span>
   <span class="timestamp">
     Posted <%= time_ago_in_words micropost.created_at %> ago

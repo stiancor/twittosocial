@@ -189,6 +189,10 @@ input, textarea, select, .uneditable-input {
   @extend .error;
 }
 
+.admin-message-checkbox {
+  display: inline;
+}
+
 /* User index */
 
 .users {
@@ -211,6 +215,9 @@ input, textarea, select, .uneditable-input {
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
+    &.admin-message {
+      background-color: #ffffe0;
+    }
   }
 }
 
@@ -238,12 +245,19 @@ div.feedback {
   display: block;
   div.like {
       float: right;
+      margin-right: 10px;
   }
 }
 
 span.username {
   font-style: italic;
   color: $grayLight;
+}
+
+span.written-as-admin {
+  color: $grayLight;
+  float: right;
+  margin-right: 10px;
 }
 
 span.countdown {

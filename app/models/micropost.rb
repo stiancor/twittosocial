@@ -1,5 +1,5 @@
 class Micropost < ActiveRecord::Base
-  attr_accessible :content
+  attr_accessible :content, :admin_message
   belongs_to :user
   has_many :likes
   validates :user_id, presence: true

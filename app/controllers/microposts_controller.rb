@@ -7,6 +7,9 @@ class MicropostsController < ApplicationController
 
   def create
     @micropost = current_user.microposts.build(params[:micropost])
+    if !current_user.admin?
+      @micropost.admin_message = false
+    end
     if @micropost.save
       send_email_if_registered_usernames(current_user.username, @micropost.content)
       flash[:success] = "Micropost created!"
@@ -37,9 +40,9 @@ class MicropostsController < ApplicationController
 
   private
 
-    def correct_user
-      @micropost = current_user.microposts.find_by_id(params[:id])
-      redirect_to root_path if @micropost.nil?
-    end
+  def correct_user
+    @micropost = current_user.microposts.find_by_id(params[:id])
+    redirect_to root_path if @micropost.nil?
+  end
 
 end

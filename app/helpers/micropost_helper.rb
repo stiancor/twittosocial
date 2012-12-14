@@ -22,4 +22,8 @@ module MicropostHelper
     User.where(username: user_names).collect {|x| x.email}
   end
 
+  def micropost_li_class(micropost)
+    "class='admin-message'" if micropost.admin_message?
+  end
+
 end
