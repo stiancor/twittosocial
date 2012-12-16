@@ -1,2 +1,2 @@
-$("#like_count_<%= @micropost.id %>").html("<%= @micropost.likes.count%> likes ")
+$("#like_count_<%= @micropost.id %>").html("<%= likes_link_generator(@micropost)%>")
 $("#like_form_<%= @micropost.id %>").html("<%= escape_javascript(render partial: 'likes/unlike', locals: {micropost: @micropost})%>")

@@ -6,7 +6,7 @@
         <%= render partial: 'likes/like', locals: {micropost: micropost} %>
     <% end %>
   </div>
-  <%= link_to "#{micropost.likes.count} likes", who_likes_micropost_path(micropost), {:remote => true, 'data-controls-modal' => "modal-window-likes-#{micropost.id}", 'data-backdrop' => true, 'data-keyboard' => true, id: "like_count_#{micropost.id}"} %>
+  <%= link_to likes_link_generator(micropost), who_likes_micropost_path(micropost), {:remote => true, 'data-controls-modal' => "modal-window-likes-#{micropost.id}", 'data-backdrop' => true, 'data-keyboard' => true, id: "like_count_#{micropost.id}"} %>
   <div class="modal hide fade" id="modal-window-likes-<%=micropost.id%>">
     <div class="modal-header">
       <h3>Likes</h3>
