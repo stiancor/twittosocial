@@ -43,12 +43,6 @@ class User < ActiveRecord::Base
     Micropost.from_users_followed_by(self)
   end
 
-  #def self.search(params)
-  #  tire.search(load: true) do
-  #    query { params[:query]} if params[:query].present?
-  #  end
-  #end
-
   mapping do
     indexes :id, :type => 'string', :index => :not_analyzed
     indexes :name

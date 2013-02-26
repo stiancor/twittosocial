@@ -1,4 +1,7 @@
 class Micropost < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   attr_accessible :content, :admin_message
   belongs_to :user
   has_many :likes
@@ -26,5 +29,12 @@ class Micropost < ActiveRecord::Base
 
   def like?(user)
     likes.find_by_user_id_and_micropost_id(user.id, self.id)
+  end
+
+  def self.search(params)
+    tire.search(load: true, page: (params[:page] || 1)) do
+      query { string params[:q]} if params[:q].present?
+      sort { by :created_at, 'desc' }
+    end
   end
 end
