@@ -1,8 +1,16 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
-<p>Total number of users in system <%= User.all.count %></p>
 
-<%= will_paginate %>
+<div class="row">
+<div class="span4">
+<%= form_tag users_path, method: :get do %>
+    <p>
+      <%= text_field_tag :query, params[:query], placeholder: 'Search for user...' %>
+      <%= submit_tag 'Search', name: nil, class: 'btn btn-large btn-primary' %>
+    </p>
+<% end %>
+</div>
+</div>
 
 <ul class="users">
   <%= render @users%>

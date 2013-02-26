@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   attr_accessible :name, :email, :password, :password_confirmation, :username
   has_secure_password
   has_many :microposts, dependent: :destroy
@@ -38,6 +41,19 @@ class User < ActiveRecord::Base
 
   def feed
     Micropost.from_users_followed_by(self)
+  end
+
+  #def self.search(params)
+  #  tire.search(load: true) do
+  #    query { params[:query]} if params[:query].present?
+  #  end
+  #end
+
+  mapping do
+    indexes :id, :type => 'string', :index => :not_analyzed
+    indexes :name
+    indexes :username
+    indexes :email
   end
 
   private
