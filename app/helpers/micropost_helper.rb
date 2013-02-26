@@ -23,7 +23,7 @@ module MicropostHelper
   end
 
   def micropost_li_class(micropost)
-    "class='admin-message'" if micropost.admin_message?
+    'admin-message' if micropost.admin_message?
   end
 
 end
