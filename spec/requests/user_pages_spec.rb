@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "User pages" do
+describe 'User pages' do
 
   subject { page }
 
-  describe "index" do
+  describe 'index' do
 
     let(:user) { FactoryGirl.create(:user) }
 
@@ -152,7 +152,7 @@ describe "User pages" do
     describe "with valid information" do
       before do
         fill_in "Secret code word", with: "foobar"
-        fill_in "Name", with: "Example User"
+        fill_in "Fullname", with: "Example User"
         fill_in "Email", with: "example@example.com"
         fill_in "Username", with: "username"
         fill_in "Password", with: "foobar"
