@@ -1,3 +1,4 @@
+# encoding: utf-8
 module FeedFieldHelper
   def format_msg(content)
     if !content.match /<|>/
@@ -8,21 +9,38 @@ module FeedFieldHelper
   end
 
   def parse_words_one_by_one(content)
-    returnArray = []
+    return_array = []
     content.split(' ').each_with_index  do |s, i|
-      if s.match /\A(?:https?:\/\/)\S+\b/
-        url = remove_last_punction_if_it_exists(s)
-        punction = add_last_punction_if_it_existed(s)
-        returnArray[i] = "<a href='#{url}' target='_blank'>#{url}</a>#{punction}"
-      elsif s.match /\Awww\.\S+\b/
-        url = remove_last_punction_if_it_exists(s)
-        punction = add_last_punction_if_it_existed(s)
-        returnArray[i] = "<a href='http://#{url}' target='_blank'>#{url}</a>#{punction}"
+      if absolute_link?(s)
+        url_to_follow, url_to_show = extract_url(s)
+        return_array[i] = "<a href='#{url_to_follow}' target='_blank'>#{url_to_follow}</a>#{url_to_show}"
+      elsif absolute_link_without_http?(s)
+        url_to_follow, url_to_show = extract_url(s)
+        return_array[i] = "<a href='http://#{url_to_follow}' target='_blank'>#{url_to_follow}</a>#{url_to_show}"
+      elsif hashtag?(s)
+        tag = extract_tag(s)
+        not_part_of_tag = extract_end_of_tag(s)
+        search_term = get_valid_search_term(tag)
+        return_array[i] = "<a href=/?utf8=✓&q=#{search_term}>#{tag}</a>#{not_part_of_tag}"
       else
-        returnArray[i] = s
+        return_array[i] = s
       end
     end
-    returnArray.join(' ')
+    return_array.join(' ')
+  end
+
+  def extract_url(s)
+    url_to_follow = remove_last_punction_if_it_exists(s)
+    url_to_show = add_last_punction_if_it_existed(s)
+    return url_to_follow, url_to_show
+  end
+
+  def absolute_link_without_http?(s)
+    s.match /\Awww\.\S+\b/
+  end
+
+  def absolute_link?(s)
+    s.match /\A(?:https?:\/\/)\S+\b/
   end
 
   def remove_last_punction_if_it_exists(str)
@@ -31,6 +49,22 @@ module FeedFieldHelper
 
   def add_last_punction_if_it_existed(str)
     str.match(/[?.!,;]?$/) || ''
+  end
+
+  def extract_tag(s)
+    s.match(/#\w+/).to_s || s
+  end
+
+  def extract_end_of_tag(s)
+    s.sub(/#\w+/, '') || s
+  end
+
+  def hashtag?(s)
+    s.match(/#\w+/)
+  end
+
+  def get_valid_search_term(s)
+    s.sub(/#/, '%23')
   end
 
   def escape_html(content)
