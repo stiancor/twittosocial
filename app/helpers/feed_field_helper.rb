@@ -21,7 +21,7 @@ module FeedFieldHelper
         tag = extract_tag(s)
         not_part_of_tag = extract_end_of_tag(s)
         search_term = get_valid_search_term(tag)
-        return_array[i] = "<a href=/?utf8=✓&q=#{search_term}>#{tag}</a>#{not_part_of_tag}"
+        return_array[i] = "<a href='/?utf8=✓&q=#{search_term}'>#{tag}</a>#{not_part_of_tag}"
       else
         return_array[i] = s
       end
@@ -52,15 +52,15 @@ module FeedFieldHelper
   end
 
   def extract_tag(s)
-    s.match(/#\w+/).to_s || s
+    s.match(/\A#[[:alnum:]]+/).to_s || s
   end
 
   def extract_end_of_tag(s)
-    s.sub(/#\w+/, '') || s
+    s.sub(/\A#[[:alnum:]]+/, '') || s
   end
 
   def hashtag?(s)
-    s.match(/#\w+/)
+    s.match(/\A#[[:alnum:]]+/)
   end
 
   def get_valid_search_term(s)

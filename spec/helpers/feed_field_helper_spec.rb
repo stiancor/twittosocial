@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "spec_helper"
 
 describe FeedFieldHelper do
@@ -44,6 +45,21 @@ describe FeedFieldHelper do
     describe "escape tags in message" do
       before { @micropost = escape_html("This <script>alert('Twittosocial rocks');</script>") }
       it { @micropost.should == "This &lt;script&gt;alert('Twittosocial rocks');&lt;/script&gt;" }
+    end
+
+    describe "create hashtag link" do
+      before { @micropost = parse_words_one_by_one("This url has one #hashtag in it") }
+      it { @micropost.should == "This url has one <a href='/?utf8=✓&q=%23hashtag'>#hashtag</a> in it"}
+    end
+
+    describe "create hashtag link with special chars" do
+      before { @micropost = parse_words_one_by_one("This url has one #hashtægs and #æøå") }
+      it { @micropost.should == "This url has one <a href='/?utf8=✓&q=%23hashtægs'>#hashtægs</a> and <a href='/?utf8=✓&q=%23æøå'>#æøå</a>"}
+    end
+
+    describe "create hashtag link at the end of message" do
+      before { @micropost = parse_words_one_by_one("yumyum,ikke noe særlig bra start på dagen det der! hos oss tror jeg det må være et tidshull eller noe, skjønner i hvertfall ikke hvordan et er mulig å stå opp kl 0600 og likevel ikke være på jobb før kl 0900..#faaraldrinoktimerhjemmeellerpaajobb") }
+      it { @micropost.should == "yumyum,ikke noe særlig bra start på dagen det der! hos oss tror jeg det må være et tidshull eller noe, skjønner i hvertfall ikke hvordan et er mulig å stå opp kl 0600 og likevel ikke være på jobb før kl 0900..#faaraldrinoktimerhjemmeellerpaajobb" }
     end
 
   end
