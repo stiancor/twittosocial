@@ -6,15 +6,18 @@ module MicropostHelper
 
   def send_email_if_registered_usernames(sender, message)
     user_names = extract_user_names(message)
-    if !user_names.empty?
+    unless user_names.empty?
       emails = get_emails(user_names)
-      if !emails.empty?
+      unless emails.empty?
         send_simple_message(sender, emails, message)
       end
     end
   end
 
   def extract_user_names(message)
+    if message.match /(\s@alle|\A@alle)/
+       return User.select('username').where('username not null').all.collect {|x| x.username}
+    end
     message.scan(/(\s@\w+|\A@\w+)/).collect{|x| x[0].strip.gsub('@','')}.uniq{|z| z}
   end
 
