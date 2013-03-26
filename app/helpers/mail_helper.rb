@@ -13,6 +13,6 @@ module MailHelper
   private
 
   def build_html_document(sender, message)
-    "<html><body>@#{sender} mentioned you in this post: <br/>#{message} <br/><br/>Check out the message at <a href='http://www.twittosocial.com' target='_blank'>Twittosocial</a><body></html>"
+    "<html><body>@#{sender} mentioned you in this post at <a href='http://www.twittosocial.com' target='_blank'>TwittoSocial</a>: <br/>#{message} <br/><br/>Check out the message at <a href='http://www.twittosocial.com' target='_blank'>TwittoSocial</a><body></html>"
   end
 end
