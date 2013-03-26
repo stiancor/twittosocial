@@ -7,12 +7,12 @@ class MicropostsController < ApplicationController
 
   def create
     @micropost = current_user.microposts.build(params[:micropost])
-    if !current_user.admin?
+    unless current_user.admin?
       @micropost.admin_message = false
     end
     if @micropost.save
       send_email_if_registered_usernames(current_user.username, @micropost.content)
-      flash[:success] = "Micropost created!"
+      flash[:success] = 'Micropost created!'
       redirect_to root_path
     else
       @feed_items = []
