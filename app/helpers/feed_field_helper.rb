@@ -1,11 +1,10 @@
 # encoding: utf-8
 module FeedFieldHelper
   def format_msg(content)
-    if !content.match /<|>/
-      parse_words_one_by_one(content)
-    else
-      escape_html(content)
+    if content.match /<|>/
+      content = escape_html(content)
     end
+    parse_words_one_by_one(content)
   end
 
   def parse_words_one_by_one(content)

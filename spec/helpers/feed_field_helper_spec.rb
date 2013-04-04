@@ -49,17 +49,22 @@ describe FeedFieldHelper do
 
     describe "create hashtag link" do
       before { @micropost = parse_words_one_by_one("This url has one #hashtag in it") }
-      it { @micropost.should == "This url has one <a href='/?utf8=✓&q=%23hashtag'>#hashtag</a> in it"}
+      it { @micropost.should == "This url has one <a href='/?utf8=✓&q=%23hashtag'>#hashtag</a> in it" }
     end
 
     describe "create hashtag link with special chars" do
       before { @micropost = parse_words_one_by_one("This url has one #hashtægs and #æøå") }
-      it { @micropost.should == "This url has one <a href='/?utf8=✓&q=%23hashtægs'>#hashtægs</a> and <a href='/?utf8=✓&q=%23æøå'>#æøå</a>"}
+      it { @micropost.should == "This url has one <a href='/?utf8=✓&q=%23hashtægs'>#hashtægs</a> and <a href='/?utf8=✓&q=%23æøå'>#æøå</a>" }
     end
 
     describe "create hashtag link at the end of message" do
       before { @micropost = parse_words_one_by_one("yumyum,ikke noe særlig bra start på dagen det der! hos oss tror jeg det må være et tidshull eller noe, skjønner i hvertfall ikke hvordan et er mulig å stå opp kl 0600 og likevel ikke være på jobb før kl 0900..#faaraldrinoktimerhjemmeellerpaajobb") }
       it { @micropost.should == "yumyum,ikke noe særlig bra start på dagen det der! hos oss tror jeg det må være et tidshull eller noe, skjønner i hvertfall ikke hvordan et er mulig å stå opp kl 0600 og likevel ikke være på jobb før kl 0900..#faaraldrinoktimerhjemmeellerpaajobb" }
+    end
+
+    describe "create hashtag in message" do
+      before { @micropost = parse_words_one_by_one("Passer bra at vi utsetter #dinner @anhtr. Tilbake fra Barcelona nå. Kan informere at > 20 C føles like deilig i år som i fjor!") }
+      it { @micropost.should == "Passer bra at vi utsetter <a href='/?utf8=✓&q=%23dinner'>#dinner</a> @anhtr. Tilbake fra Barcelona nå. Kan informere at > 20 C føles like deilig i år som i fjor!" }
     end
 
   end
