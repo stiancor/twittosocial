@@ -15,7 +15,7 @@ module MicropostHelper
   end
 
   def extract_user_names(message)
-    if message.match /(\s@alle|\A@alle)/
+    if message.match /(\s@alle\z|\A@alle\z)/
        return User.select('username').where('username is not null').all.collect {|x| x.username}
     end
     message.scan(/(\s@\w+|\A@\w+)/).collect{|x| x[0].strip.gsub('@','')}.uniq{|z| z}
