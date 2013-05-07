@@ -4,9 +4,10 @@ module MailHelper
 
   def send_simple_message (sender, recipients, message)
     RestClient.post "https://api:#{ENV['MAILGUN_KEY']}@api.mailgun.net/v2/#{ENV['MAILGUN_SERVER']}/messages",
-                    :from => "Twittosocial <no-reply@twittosocial.com>",
+                    :from => "TwittoSocial <no-reply@twittosocial.com>",
                     :to => recipients.join(','),
-                    :subject => "@#{sender} mentioned you at Twittosocial",
+                    :sender => "TwittoSocial",
+                    :subject => "@#{sender} mentioned you at TwittoSocial",
                     :html => build_html_document(sender, message)
   end
 
