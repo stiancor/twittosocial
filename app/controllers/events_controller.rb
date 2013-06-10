@@ -6,6 +6,10 @@ class EventsController < ApplicationController
       @events = Event.paginate(page: params[:page])
   end
 
+  def show
+    @event = Event.find(params[:id])
+  end
+
   def new
     @event = Event.new
   end
