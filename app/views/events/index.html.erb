@@ -1,0 +1,11 @@
+<% provide(:title, 'All upcoming events') %>
+
+<h1>All upcoming events!</h1>
+
+<% if @events.empty? %>
+    <h3>Sorry, no events planed :-/</h3>
+<% else %>
+    <ul class="events">
+      <%= render @events %>
+    </ul>
+<% end %>
