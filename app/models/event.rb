@@ -7,4 +7,13 @@ class Event < ActiveRecord::Base
   validates_presence_of :start_time, :end_time
   validates :invitation, presence: true, length: {maximum: 3000}
   validates :user_id, presence: true
+  validate :start_time_before_end_time
+
+  private
+
+  def start_time_before_end_time
+    if start_time && end_time && start_time > end_time
+      errors.add(:start_time, "Start time must be before end time")
+    end
+  end
 end

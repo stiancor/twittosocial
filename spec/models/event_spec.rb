@@ -40,6 +40,11 @@ describe Event do
     it { should_not be_valid }
   end
 
+  describe 'when title is too long' do
+    before { @event.title = 'a'*251 }
+    it { should_not be_valid }
+  end
+
   describe 'when start_time is not present' do
     before { @event.start_time = nil }
     it { should_not be_valid }
@@ -57,6 +62,19 @@ describe Event do
 
   describe 'when invitation is blank' do
     before { @event.invitation = ' ' }
+    it { should_not be_valid }
+  end
+
+  describe 'when invitation is too long' do
+    before { @event.invitation = 'a'*3001 }
+    it { should_not be_valid }
+  end
+
+  describe 'start_time cannot be after end_time' do
+    before do
+      @event.start_time = DateTime.new.end_of_day
+      @event.end_time = DateTime.new.at_beginning_of_day
+    end
     it { should_not be_valid }
   end
 
