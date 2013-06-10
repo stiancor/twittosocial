@@ -23,4 +23,41 @@ describe Event do
     end
   end
 
+  it { should be_valid }
+
+  describe 'when user_id is not present' do
+    before { @event.user_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe 'when title is not present' do
+    before { @event.title = nil }
+    it { should_not be_valid }
+  end
+
+  describe 'when title is blank' do
+    before { @event.title = ' ' }
+    it { should_not be_valid }
+  end
+
+  describe 'when start_time is not present' do
+    before { @event.start_time = nil }
+    it { should_not be_valid }
+  end
+
+  describe 'when end_time is not present' do
+    before { @event.end_time = nil }
+    it { should_not be_valid }
+  end
+
+  describe 'when invitation is nil' do
+    before { @event.invitation = nil }
+    it { should_not be_valid }
+  end
+
+  describe 'when invitation is blank' do
+    before { @event.invitation = ' ' }
+    it { should_not be_valid }
+  end
+
 end
