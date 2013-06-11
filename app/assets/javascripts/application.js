@@ -17,8 +17,9 @@
 
 jQuery(document).ready(function ($) {
     updateCountdown();
-    $('.message').change(updateCountdown);
-    $('.message').keyup(updateCountdown);
+    var message = $('.message');
+    message.change(updateCountdown);
+    message.keyup(updateCountdown);
 });
 
 function updateCountdown() {
