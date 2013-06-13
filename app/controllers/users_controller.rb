@@ -58,6 +58,21 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def forgotten_password
+  end
+
+  def send_password_link
+      user = User.find_by_email(params[:user][:email])
+      if user
+        user.update_attribute(:forgotten_password_key, SecureRandom.uuid)
+        flash.now[:success] = 'Check your email'
+        redirect_to signin_path
+      else
+        flash.now[:error] = 'Email not found'
+        render 'forgotten_password'
+      end
+  end
+
   def following
     @title = 'Following'
     @user = User.find(params[:id])

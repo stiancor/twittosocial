@@ -1,5 +1,6 @@
 SampleApp::Application.routes.draw do
   resources :users do
+    resources :find_forgotten_password_user, path: 'lost_password'
     member do
       get :following, :followers
     end
@@ -17,6 +18,8 @@ SampleApp::Application.routes.draw do
   root to: 'static_pages#home'
 
   match '/signup', to: 'users#new'
+  match '/forgotten_password', to: 'users#forgotten_password'
+  match '/send_password_link', to: 'users#send_password_link'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
   match '/sessions', to: 'sessions#create'
