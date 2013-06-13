@@ -28,6 +28,15 @@ jQuery(document).ready(function ($) {
     updateCountdown();
     message.change(updateCountdown);
     message.keyup(updateCountdown);
+
+    $(".form_datetime").datetimepicker({
+        format: "dd MM yyyy - hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        pickerPosition: "bottom-left"
+    });
 });
+
+
 
 

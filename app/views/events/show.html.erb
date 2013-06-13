@@ -1,11 +1,13 @@
 <% provide(:title, @event.title) %>
-<h1>Event: <%= @event.title %></h1>
+<h1>Event</h1>
 <div class="row">
   <div class="span6 offset3">
-    <%= @event.title %>
-    <%= @event.location %>
-    <%= @event.start_time %>
-    <%= @event.end_time %>
-    <%= @event.invitation %>
+    <p>Title: <%= @event.title %></p>
+    <% if @event.location %>
+        <p>Event: <%= @event.location %></p>
+    <% end %>
+    <p>Start time: <%= @event.start_time %></p>
+    <p>End time: <%= @event.end_time %></p>
+    <p>Invitiation: <%= @event.invitation %></p>
   </div>
 </div>
