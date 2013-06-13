@@ -65,7 +65,7 @@ class UsersController < ApplicationController
       user = User.find_by_email(params[:user][:email])
       if user
         user.update_attribute(:forgotten_password_key, SecureRandom.uuid)
-        flash.now[:success] = 'Check your email'
+        flash[:success] = 'Check your email'
         redirect_to signin_path
       else
         flash.now[:error] = 'Email not found'
