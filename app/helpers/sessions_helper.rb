@@ -35,10 +35,16 @@ module SessionsHelper
     session.delete(:return_to)
   end
 
+  def signed_out_user
+    if signed_in?
+      redirect_to root_path, notice: 'Already signed in.'
+    end
+  end
+
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to signin_path, notice: "Please sign in."
+      redirect_to signin_path, notice: 'Please sign in.'
     end
   end
 end

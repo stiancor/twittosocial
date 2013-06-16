@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  include UsersHelper
+  include UsersHelper, MailHelper
 
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
+  before_filter :signed_out_user, only: [:forgotten_password, :send_password_link, :show_reset_password, :reset_password]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
 
@@ -62,15 +63,42 @@ class UsersController < ApplicationController
   end
 
   def send_password_link
-      user = User.find_by_email(params[:user][:email])
-      if user
-        user.update_attribute(:forgotten_password_key, SecureRandom.uuid)
-        flash[:success] = 'Check your email'
-        redirect_to signin_path
+    user = User.find_by_email(params[:user][:email])
+    if user
+      token = SecureRandom.urlsafe_base64
+      user.update_attribute(:forgotten_password_key, token)
+      send_forgot_password_message(user.email, token)
+      flash[:success] = 'Check your email'
+      redirect_to signin_path
+    else
+      flash.now[:error] = 'Email not found'
+      render 'forgotten_password'
+    end
+  end
+
+  def show_reset_password
+    @user = User.find_by_forgotten_password_key(params[:uuid])
+    if @user.nil?
+      flash[:error] = 'Usertoken could not be found. Try resending the password for your user'
+      redirect_to forgotten_password_path
+    end
+  end
+
+  def reset_password
+    @user = User.find_by_forgotten_password_key(params[:forgotten_password_key]) if params[:forgotten_password_key]
+    if @user
+      if @user.update_attributes(params[:user])
+        @user.update_attribute(:forgotten_password_key, nil)
+        sign_in @user
+        flash[:success] = 'New password was set. Welcome inside!'
+        redirect_to root_path
       else
-        flash.now[:error] = 'Email not found'
-        render 'forgotten_password'
+        render 'show_reset_password'
       end
+    else
+      flash[:error] = 'Usertoken could not be found.'
+      render 'forgotten_password'
+    end
   end
 
   def following
