@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
 
   attr_accessible :name, :email, :password, :password_confirmation, :username
   has_secure_password
