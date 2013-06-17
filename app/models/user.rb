@@ -42,13 +42,6 @@ class User < ActiveRecord::Base
     Micropost.from_users_followed_by(self)
   end
 
-  mapping do
-    indexes :id, :type => 'string', :index => :not_analyzed
-    indexes :name
-    indexes :username
-    indexes :email
-  end
-
   private
 
   def create_remember_token
