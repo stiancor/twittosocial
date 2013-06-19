@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :signed_in_user
 
   def index
-      @events = Event.paginate(page: params[:page])
+    @events = Event.paginate(page: params[:page])
   end
 
   def show
@@ -24,6 +24,10 @@ class EventsController < ApplicationController
       @usernames = User.all.collect { |user| user.username.to_s }.sort
       render 'new'
     end
+  end
+
+  def edit
+    @event = Event.find(params[:id])
   end
 
   def destroy
