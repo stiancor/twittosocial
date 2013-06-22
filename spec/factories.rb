@@ -25,7 +25,7 @@ FactoryGirl.define do
   end
 
   factory :event_invite do
-    attend_status 0
+    attend_status 'no_reply'
     event
     user
   end
