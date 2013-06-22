@@ -23,5 +23,11 @@ FactoryGirl.define do
     invitation 'This is an invitation'
     user
   end
+
+  factory :event_invite do
+    attend_status 0
+    event
+    user
+  end
 end
 
