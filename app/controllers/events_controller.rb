@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :signed_in_user
 
   def index
-    @events = Event.paginate(page: params[:page])
+    @events = Event.where('end_time > ?', DateTime.now).paginate(page: params[:page]).order('start_time')
   end
 
   def show
