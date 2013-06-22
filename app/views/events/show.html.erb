@@ -4,11 +4,11 @@
   <div class="span6 offset3">
     <p>Title: <%= @event.title %></p>
     <% if @event.location %>
-        <p>Event: <%= @event.location %></p>
+        <p>Location: <%= @event.location.blank? ? 'Not specified yet' : @event.location %></p>
     <% end %>
-    <p>Start time: <%= @event.start_time %></p>
+    <p>Start time: <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M') %></p>
 
-    <p>End time: <%= @event.end_time %></p>
+    <p>End time: <%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %></p>
 
     <p>Invitiation: <%= @event.invitation %></p>
     <%= link_to_if(@event.user_id == current_user.id, 'Edit event', edit_event_path) %>

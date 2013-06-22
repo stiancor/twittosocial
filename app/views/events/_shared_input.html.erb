@@ -7,17 +7,18 @@
 
         <%= f.label :location %>
         <%= f.text_field :location, size: 250 %>
-        <%= f.label :start_time %>
 
+        <%= f.label :start_time %>
         <div class="input-append date form_datetime">
-          <%= f.text_field :start_time, readonly: true, size: 16, class: 'event_date_time' %>
+          <%= f.text_field :start_time, readonly: true, size: 16, class: 'event_date_time',
+                           value: (@event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M'))%>
           <span class="add-on"><i class="icon-th"></i></span>
         </div>
 
         <%= f.label :end_time %>
-
         <div class="input-append date form_datetime">
-          <%= f.text_field :end_time, readonly: true, size: 16, class: 'event_date_time' %>
+          <%= f.text_field :end_time, readonly: true, size: 16, class: 'event_date_time',
+                           value: (@event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M')) %>
           <span class="add-on"><i class="icon-th"></i></span>
         </div>
 
