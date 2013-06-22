@@ -5,10 +5,10 @@
 <% if @events.empty? %>
     <h3>Sorry, no events planned :-/</h3>
 <% else %>
-    <ul class="events">
+    <div class="events">
       <%= render @events %>
-    </ul>
+    </div>
 <% end %>
 <hr>
-<b><%= link_to 'Create new event', new_event_path %></b>
+<%= link_to 'Create new event', new_event_path %>
 
