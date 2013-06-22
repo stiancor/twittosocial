@@ -45,4 +45,9 @@ describe EventInvite do
     it { should_not be_valid }
   end
 
+  describe 'when attend_status has invalid option' do
+    before { @event_invite.attend_status = 'something' }
+    it { should_not be_valid }
+  end
+
 end
