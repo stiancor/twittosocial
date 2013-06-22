@@ -7,7 +7,10 @@
         <p>Event: <%= @event.location %></p>
     <% end %>
     <p>Start time: <%= @event.start_time %></p>
+
     <p>End time: <%= @event.end_time %></p>
+
     <p>Invitiation: <%= @event.invitation %></p>
+    <%= link_to_if(@event.user_id == current_user.id, 'Edit event', edit_event_path) %>
   </div>
 </div>
