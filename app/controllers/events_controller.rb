@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
 
   before_filter :signed_in_user
+  before_filter :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @events = Event.where('end_time > ?', DateTime.now).paginate(page: params[:page]).order('start_time')
@@ -27,12 +28,27 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
+  end
+
+  def update
+    if @event.update_attributes(params[:event])
+      flash[:success] = 'Event was updated'
+      redirect_to events_path
+    else
+      render 'edit'
+    end
   end
 
   def destroy
     Event.find(params[:id]).destroy
     flash[:success] = 'Event deleted'
     redirect_to events_path
+  end
+
+  private
+
+  def correct_user
+    @event = current_user.events.find_by_id(params[:id])
+    redirect_to event_path if @event.nil?
   end
 end

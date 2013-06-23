@@ -1,6 +1,7 @@
 <hr>
 <div class="event">
-  <div class="event-title"><%= link_to event.title, event %></div>
+  <%= link_to gravatar_for(event.user, options = {size: 95}), event.user %>
+  <div><%= link_to event.title, event %></div>
   <div class="event-date"><%= event.start_time.blank? ? '' : event.start_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></div>
   <% unless event.location.blank? %>
       <div class="event-location"><%= event.location %> <i class="icon-map-marker"></i></div>
@@ -12,6 +13,6 @@
   <% end %>
 
   <% if current_user.admin? || current_user?(event.user) %>
-      <%= link_to 'delete event', event, method: :delete, confirm: 'Are you sure?' %>
+      <%= link_to 'edit', [:edit, event]  %> | <%= link_to 'delete', event, method: :delete, confirm: 'Are you sure?' %>
   <% end %>
 </div>
