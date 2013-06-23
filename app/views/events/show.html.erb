@@ -6,14 +6,16 @@
       <p><span class="event-title"> <%= @event.title %></span></p>
       <hr/>
       <% if @event.location %>
-          <p><i class="icon-map-marker"></i> <%= @event.location.blank? ? 'Not specified yet' : @event.location %></p>
+          <p><%= @event.location.blank? ? 'Not specified yet' : @event.location %><i class="icon-map-marker"></i></p>
       <% end %>
-      <p><span class="event-label">Start:</span> <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
+      <p>Start: <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
 
-      <p><span class="event-label">End:</span> <%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
+      <p>End: <%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
 
       <p><span class="event-label">Invitation:</span> <%= simple_format(@event.invitation) %></p>
-      <%= link_to_if(@event.user_id == current_user.id, 'Edit event', edit_event_path) %>
+      <% if current_user.admin? || current_user?(event.user) %>
+          <%= link_to 'edit', [:edit, @event]  %> | <%= link_to 'delete', @event, method: :delete, confirm: 'Are you sure?' %>
+      <% end %>
     </div>
   </div>
 </div>
