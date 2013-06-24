@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
   before_filter :signed_in_user
-  before_filter :correct_user, only: [:edit, :update, :destroy]
+  before_filter :user_has_access, only: [:edit, :update, :destroy]
 
   def index
     @events = Event.where('end_time > ?', DateTime.now).paginate(page: params[:page]).order('start_time')
@@ -47,8 +47,12 @@ class EventsController < ApplicationController
 
   private
 
-  def correct_user
-    @event = current_user.events.find_by_id(params[:id])
+  def user_has_access
+    if current_user.admin
+      @event = Event.find_by_id(params[:id])
+    else
+      @event = current_user.events.find_by_id(params[:id])
+    end
     redirect_to event_path if @event.nil?
   end
 end
