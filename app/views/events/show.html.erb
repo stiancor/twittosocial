@@ -13,8 +13,11 @@
       <p>End: <%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
 
       <p><span class="event-label">Invitation:</span> <%= simple_format(@event.invitation) %></p>
+      <% if current_user?(@event.user) %>
+          <%= link_to 'edit', [:edit, @event]  %> |
+      <% end %>
       <% if current_user.admin? || current_user?(@event.user) %>
-          <%= link_to 'edit', [:edit, @event]  %> | <%= link_to 'delete', @event, method: :delete, confirm: 'Are you sure?' %>
+          <%= link_to 'delete', @event, method: :delete, confirm: 'Are you sure?' %>
       <% end %>
     </div>
   </div>
