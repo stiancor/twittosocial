@@ -2,5 +2,7 @@
     <div>
       <%= f.hidden_field :micropost_id %>
     </div>
-    <%= f.submit "Like", class: "btn btn-success btn-mini" %>
+    <%= button_tag class: 'btn btn-success btn-mini' do %>
+        <i class="icon-thumbs-up icon-white"></i>
+    <% end %>
 <% end %>
