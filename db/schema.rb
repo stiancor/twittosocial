@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130622144404) do
+ActiveRecord::Schema.define(:version => 20130627063301) do
 
   create_table "codewords", :force => true do |t|
     t.string   "codeword"
@@ -34,8 +34,9 @@ ActiveRecord::Schema.define(:version => 20130622144404) do
     t.datetime "end_time"
     t.text     "invitation"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "send_mail",  :default => false
   end
 
   create_table "likes", :force => true do |t|

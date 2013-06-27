@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessible :title, :location, :start_time, :end_time, :invitation
+  attr_accessible :title, :location, :start_time, :end_time, :invitation, :send_mail
 
   belongs_to :user
   has_many :event_invites, dependent: :destroy
@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
 
   def start_time_before_end_time
     if start_time && end_time && start_time > end_time
-      errors.add(:start_time, "Start time must be before end time")
+      errors.add(:start_time, 'Start time must be before end time')
     end
   end
 end

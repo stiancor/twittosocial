@@ -1,14 +1,14 @@
 <%= form_for(@micropost) do |f| %>
     <%= render 'shared/error_messages', object: @micropost %>
     <div class="field">
-      <%= f.text_area :content, placeholder: "Compose new micropost...", rows: 7, class: "message" %>
+      <%= f.text_area :content, placeholder: 'Compose new micropost...', rows: 7, class: 'message' %>
     </div>
     <% if current_user.admin? %>
         <div class="field">
-          <%= f.label :admin_message, class: "admin-message-checkbox" %>
+          <%= f.label :admin_message, class: 'label-inline' %>
           <%= f.check_box :admin_message %>
         </div>
     <% end %>
-    <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+    <%= f.submit 'Post', class: 'btn btn-large btn-primary' %>
     <span class="countdown"></span>
 <% end %>

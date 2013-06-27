@@ -11,7 +11,7 @@
         <%= f.label :start_time %>
         <div class="input-append date form_datetime">
           <%= f.text_field :start_time, readonly: true, size: 16, class: 'event_date_time',
-                           value: (@event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M'))%>
+                           value: (@event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M')) %>
           <span class="add-on"><i class="icon-th"></i></span>
         </div>
 
@@ -22,8 +22,13 @@
           <span class="add-on"><i class="icon-th"></i></span>
         </div>
 
-        <%= f.label :invitation, 'Invitation' %>
-        <%= f.text_area :invitation %>
+        <div class="send-mail-option">
+          <%= f.label(:send_mail, 'Send email', class: 'label-inline') %>
+          <%= f.check_box(:send_mail) %>
+        </div>
+
+        <%= f.text_area :invitation, placeholder: 'Write your invitation here...' %>
+
         <%= f.submit 'Save', class: 'btn btn-large btn-primary' %>
     <% end %>
   </div>
