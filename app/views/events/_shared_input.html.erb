@@ -23,15 +23,15 @@
         </div>
 
         <div class="send-mail-option">
-          <%= f.label(:send_mail, 'Send email', class: 'label-inline') %> &nbsp;
           <%= f.check_box(:send_mail) %>
+          <%= f.label(:send_mail, 'Send email', class: 'label-inline') %> &nbsp;
         </div>
         <div class="send-mail-option">
-          Invite everyone <%= radio_button_tag(:invites, 'Everybody', true) %>&nbsp;
-          Pick someone <%= radio_button_tag(:invites, 'Somebody') %>
+          <%= radio_button_tag(:invites, 'all', true) %> Invite everyone&nbsp;
+          <%= radio_button_tag(:invites, 'someone', false, class: 'modal-window-invites') %> Pick someone
         </div>
 
-        <%= f.text_area :invitation, placeholder: 'Write your invitation here...' %>
+        <%= f.text_area :invitation, placeholder: 'Write invitation here...' %>
 
         <%= f.submit 'Save', class: 'btn btn-large btn-primary' %>
     <% end %>
