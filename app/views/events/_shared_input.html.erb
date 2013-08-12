@@ -22,18 +22,34 @@
           <span class="add-on"><i class="icon-th"></i></span>
         </div>
 
-        <div class="send-mail-option">
-          <%= f.check_box(:send_mail) %>
+        <div class="space-bottom">
+          <%= f.check_box(:send_mail, checked: true) %>
           <%= f.label(:send_mail, 'Send email', class: 'label-inline') %> &nbsp;
         </div>
-        <div class="send-mail-option">
-          <%= radio_button_tag(:invites, 'all', true) %> Invite everyone&nbsp;
-          <%= radio_button_tag(:invites, 'someone', false, class: 'modal-window-invites') %> Pick someone
-        </div>
+        <div class="space-bottom">
 
-        <%= f.text_area :invitation, placeholder: 'Write invitation here...' %>
+          <%= f.radio_button :invite_all, true, class: 'invite_all_true' %>
+          <%= f.label :invite_all, 'Invite everyone', value: 'true', class: 'label-inline' %>
+          <%= f.radio_button :invite_all, false, class: 'invite_all_false' %>
+          <%= f.label :invite_all, 'Pick someone', value: 'false', class: 'label-inline' %>
 
-        <%= f.submit 'Save', class: 'btn btn-large btn-primary' %>
+          <div id="people-to-invite">
+            <b>Pick people to invite</b>
+
+
+            <%= hidden_field_tag 'event[user_ids][]', nil %>
+            <% @users.each do |user| %>
+                <br/>
+                <%= check_box_tag 'event[user_ids][]', user.id, @event.user_ids.include?(user.id), id: dom_id(user) %>
+                <%= label_tag dom_id(user), user.name, class: 'label-inline' %>
+            <% end %>
+
+          </div>
+
+          <%= f.text_area :invitation, placeholder: 'Write invitation here...' %>
+
+          <%= f.submit 'Save', class: 'btn btn-large btn-primary' %>
     <% end %>
+    </div>
   </div>
 </div>

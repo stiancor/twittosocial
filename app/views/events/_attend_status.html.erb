@@ -1,0 +1,9 @@
+<% if status == 'no_reply' %>
+    No reply
+<% elsif status == 'yes' %>
+    <span class="status-attending">Attending</span>
+<% elsif status == 'no' %>
+    <span class="status-not-attending">Not attending</span>
+<% else %>
+    <span class="status-tentative">Maybe</span>
+<% end %>

@@ -1,6 +1,0 @@
-$('.modal-window-invites').modal("show");
-$('.modal-body').html('<%= escape_javascript(render partial: 'add_invites', object: @users) %>');
-$('.modal-button').click(function(){
-    var clicked = $(this);
-    clicked.parent().parent().modal("hide");
-});

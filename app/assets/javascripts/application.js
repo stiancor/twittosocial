@@ -35,6 +35,23 @@ jQuery(document).ready(function ($) {
         todayBtn: true,
         pickerPosition: "bottom-left"
     });
+
+    var invite_everyone = $("#event_invite_all_true");
+
+    if (invite_everyone.attr('checked')) {
+        $("#people-to-invite").hide();
+    } else {
+        $("#people-to-invite").show();
+    }
+
+    invite_everyone.click(function () {
+        $("#people-to-invite").hide();
+    })
+
+    $("#event_invite_all_false").click(function () {
+        $("#people-to-invite").show();
+    })
+
 });
 
 

@@ -308,19 +308,11 @@ form.global-search {
   width: 100%;
 
   .event_date_time {
-    width: 94%;
+    width: 93%;
   }
 
   .add-on {
     margin-left: -5px;
-  }
-}
-
-.event {
-  .event-title {
-    font-size: 1.2em;
-    padding-bottom: 5px;
-    margin-left: -1px;
   }
 }
 
@@ -329,8 +321,8 @@ span.event-label {
   font-size: 1.06em;
 }
 
-div.send-mail-option {
-  padding-bottom: 15px;
+div.space-bottom {
+  padding-bottom: 10px;
 }
 
 div.modal {
@@ -339,6 +331,26 @@ div.modal {
     margin-right: auto;
     margin-top: -200px;
   }
+}
+
+ul {
+  list-style-type: none;
+}
+
+ul.event-attendees li span {
+  font-weight: bold;
+}
+
+span.status-attending {
+  color: green;
+}
+
+span.status-not-attending {
+  color: #f00;
+}
+
+span.status-tentative {
+  color: #006dcc;
 }
 
 

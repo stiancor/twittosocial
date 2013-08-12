@@ -3,7 +3,7 @@
 <div class="row">
   <div class="span6 offset3">
     <div class="well event">
-      <p><span class="event-title"> <%= @event.title %></span></p>
+      <h3> <%= @event.title %></h3>
       <hr/>
       <% if @event.location %>
           <p><%= @event.location.blank? ? 'Not specified yet' : @event.location %><i class="icon-map-marker"></i></p>
@@ -12,7 +12,16 @@
 
       <p>End: <%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
 
-      <p><span class="event-label">Invitation:</span> <%= simple_format(@event.invitation) %></p>
+      <p>
+        People:
+      </p>
+      <ul class="event-attendees">
+        <% @event.event_invites.each do |i| %>
+            <li><%= i.user.name %> - <%= render partial: 'attend_status', locals: {status: i.attend_status} %></li>
+        <% end %>
+      </ul>
+
+      <p><span class="event-label">Invitation:</span> <div class="well"><%= simple_format(@event.invitation) %></div></p>
       <% if current_user?(@event.user) %>
           <%= link_to 'edit', [:edit, @event]  %> |
       <% end %>

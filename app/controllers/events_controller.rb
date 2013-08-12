@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   before_filter :user_has_access, only: [:edit, :update, :destroy]
 
   def index
-    @events = Event.where('end_time > ?', DateTime.now).paginate(page: params[:page]).order('start_time')
+    @events = Event.includes(:event_invites).where('end_time > ? and event_invites.user_id = ?', DateTime.now, current_user.id).paginate(page: params[:page]).order('start_time')
   end
 
   def show
@@ -12,15 +12,18 @@ class EventsController < ApplicationController
   end
 
   def new
+    @users = User.all(select: 'id, name')
     @event = Event.new
   end
 
   def create
     @event = current_user.events.build(params[:event])
+    @event.user = current_user
     if @event.save
       flash[:success] = 'Event created!'
       redirect_to events_path
     else
+      @users = User.all(select: 'id, name')
       @feed_items = []
       @usernames = User.all.collect { |user| user.username.to_s }.sort
       render 'new'
@@ -28,6 +31,7 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @users = User.all(select: 'id, name')
   end
 
   def update

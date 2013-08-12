@@ -1,8 +1,9 @@
 class Event < ActiveRecord::Base
-  attr_accessible :title, :location, :start_time, :end_time, :invitation, :send_mail
-
+  has_many :event_invites
+  has_many :users, through: :event_invites, validate: false
   belongs_to :user
-  has_many :event_invites, dependent: :destroy
+
+  attr_accessible :title, :location, :start_time, :end_time, :invitation, :send_mail, :invite_all, :user_id, :user_ids
 
   validates :title, presence: true, length: {maximum: 250}
   validates_presence_of :start_time, :end_time
