@@ -28,11 +28,7 @@ module ApplicationHelper
   end
 
   def unanswered_invites
-    if @event_summary['no_reply']
-      "<span class='unanswered-event'>#{@event_summary['no_reply'].to_i}</span>"
-    else
-      '0'
-    end
+    @event_summary['no_reply'] ? "<span class='unanswered-event'>#{@event_summary['no_reply'].to_i}</span>" : 0
   end
 
 end
