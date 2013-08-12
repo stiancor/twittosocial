@@ -1,7 +1,8 @@
 class EventsController < ApplicationController
 
   before_filter :signed_in_user
-  before_filter :user_has_access, only: [:edit, :update, :destroy]
+  before_filter :user_is_invited, only: [:edit, :update, :destroy, :show]
+  before_filter :user_can_update, only: [:edit, :update, :destroy]
 
   def index
     @events = Event.includes(:event_invites)
@@ -14,7 +15,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @users = User.all(select: 'id, name')
+    @users = User.where('id != ?', current_user.id).select('id, name')
     @event = Event.new
   end
 
@@ -22,10 +23,11 @@ class EventsController < ApplicationController
     @event = current_user.events.build(params[:event])
     @event.user = current_user
     if @event.save
+      @event.event_invites.create(user_id: current_user.id, attend_status: 'yes')
       flash[:success] = 'Event created!'
       redirect_to events_path
     else
-      @users = User.all(select: 'id, name')
+      @users = User.where('id != ?', current_user.id).select('id, name')
       @feed_items = []
       @usernames = User.all.collect { |user| user.username.to_s }.sort
       render 'new'
@@ -33,11 +35,12 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @users = User.all(select: 'id, name')
+    @users = User.where('id != ?', current_user.id).select('id, name')
   end
 
   def update
     if @event.update_attributes(params[:event])
+      @event.event_invites.create(user_id: current_user.id, attend_status: 'yes')
       flash[:success] = 'Event was updated'
       redirect_to events_path
     else
@@ -53,7 +56,14 @@ class EventsController < ApplicationController
 
   private
 
-  def user_has_access
+  def user_is_invited
+    if Event.includes(:event_invites).where('events.id = ? and event_invites.user_id = ?', params[:id], current_user.id).length == 0
+      flash[:warning] = 'You have no access to this event!'
+      redirect_to events_path
+    end
+  end
+
+  def user_can_update
     if current_user.admin
       @event = Event.find_by_id(params[:id])
     else
