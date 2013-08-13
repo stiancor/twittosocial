@@ -2,13 +2,14 @@
   <div class="navbar-inner">
     <div class="container">
       <%= link_to 'twittosocial', root_path, id: 'logo' %>
-      <nav class="nav-collapse">
-        <ul class="nav pull-right">
-          <% if signed_in? %>
-              <li><%= render partial: 'layouts/event_header' %> </li>
-              <li><%= link_to 'Help', help_path %></li>
-              <li><%= link_to 'Users', users_path %></li>
-              <li id="fat-menu" class="dropdown">
+
+      <ul class="nav pull-right">
+        <% if signed_in? %>
+            <li><%= render partial: 'layouts/event_header' %> </li>
+            <li><span class='small-screen-hidden'><%= link_to 'Help', help_path %></span></li>
+            <li><span class='small-screen-hidden'><%= link_to 'Users', users_path %></span></li>
+            <li id="fat-menu" class="dropdown">
+                <span class='small-screen-hidden'>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   Account <b class="caret"></b>
                 </a>
@@ -20,19 +21,19 @@
                     <%= link_to 'Sign out', signout_path, method: 'delete' %>
                   </li>
                 </ul>
-              </li>
-          <% else %>
-              <li><%= link_to 'Sign in', signin_path %></li>
-          <% end %>
-        </ul>
-        <% if signed_in? %>
-            <%= form_tag root_path, method: :get, class: 'pull-right global-search' do %>
-                <p>
-                  <%= text_field_tag :q, params[:q], placeholder: 'Search', id: 'nav-search-field' %>
-                </p>
-            <% end %>
+                </span>
+            </li>
+        <% else %>
+            <li><%= link_to 'Sign in', signin_path %></li>
         <% end %>
-      </nav>
+      </ul>
+      <% if signed_in? %>
+          <%= form_tag root_path, method: :get, class: 'pull-right global-search small-screen-hidden' do %>
+              <p>
+                <%= text_field_tag :q, params[:q], placeholder: 'Search', id: 'nav-search-field' %>
+              </p>
+          <% end %>
+      <% end %>
     </div>
   </div>
 </header>

@@ -20,7 +20,7 @@ html {
   }
 }
 
-section.small-screen-hidden {
+.small-screen-hidden {
   @media screen and (max-width: 766px) {
     display: none;
   }
