@@ -1,0 +1,2 @@
+$("#event-reply-status-<%= @event_invite.event_id %>").html("<%= escape_javascript(render partial: 'events/attend_status',
+locals: {status: @event_invite.attend_status})%>")

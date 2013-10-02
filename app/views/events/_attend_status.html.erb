@@ -1,9 +1,9 @@
-<% if status == 'no_reply' %>
-    Awaiting reply
+<% if status == 'maybe' %>
+    <span class="label label-warning">Maybe</span>
 <% elsif status == 'yes' %>
-    <span class="status-attending">Attending</span>
+    <span class="label label-success">Attending</span>
 <% elsif status == 'no' %>
-    <span class="status-not-attending">Not attending</span>
+    <span class="label label-important">Not attending</span>
 <% else %>
-    <span class="status-tentative">Maybe</span>
+    <span class="label">Awaiting reply</span>
 <% end %>

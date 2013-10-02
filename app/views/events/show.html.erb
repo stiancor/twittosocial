@@ -5,7 +5,11 @@
     <div class="well event">
       <h3> <%= @event.title %></h3>
       <hr/>
-      <p>Organizer: <%= link_to @event.user.name, @event.user %></p>
+      <div>
+        <%= link_to gravatar_for(@event.user, options = {size: 50}), @event.user %>
+        <%= link_to @event.user.name, @event.user %> <span class="username">@<%= @event.user.username %></span>
+      </div>
+
       <% if @event.location %>
           <p><%= @event.location.blank? ? 'Not specified yet' : @event.location %><i class="icon-map-marker"></i></p>
       <% end %>

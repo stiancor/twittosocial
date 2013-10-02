@@ -54,6 +54,18 @@ class EventsController < ApplicationController
     redirect_to events_path
   end
 
+  def join
+    Rails.logger.error("JOIN")
+  end
+
+  def maybe
+    Rails.logger.error("MAYBE")
+  end
+
+  def decline
+    Rails.logger.error("DECLINE")
+  end
+
   private
 
   def user_is_invited

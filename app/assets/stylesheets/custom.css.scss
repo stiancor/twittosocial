@@ -26,6 +26,12 @@ html {
   }
 }
 
+.micro-screen-hidden {
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
+}
+
 section {
   overflow: auto;
 }
@@ -341,26 +347,19 @@ ul.event-attendees li span {
   font-weight: bold;
 }
 
-span.status-attending {
-  color: green;
+.submitLink {
+  background-color: transparent;
+  border: none;
+  color: #0088cc;
+  cursor: pointer;
+  padding: 0px;
+  margin-bottom: 0px;
 }
 
-span.status-not-attending {
-  color: #f00;
+.no_clear {
+  clear: none;
+  display: inline;;
 }
-
-span.status-tentative {
-  color: #006dcc;
-}
-
-span.unanswered-event {
-  color: #f00;
-  font-weight: bold;
-}
-
-
-
-
 
 
 
