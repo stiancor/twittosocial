@@ -7,22 +7,40 @@
       <hr/>
       <div>
         <%= link_to gravatar_for(@event.user, options = {size: 50}), @event.user %>
-        <%= link_to @event.user.name, @event.user %> <span class="username">@<%= @event.user.username %></span>
+        <% if current_user?(@event.user) %>
+            <div class="event-organizer"><%= link_to 'You', @event.user %>
+              <span class="username"> are organizer </span></div>
+        <% else %>
+            <div class="event-organizer"><%= link_to @event.user.name, @event.user %>
+              <span class="username"> invited you </span></div>
+        <% end %>
       </div>
 
       <% if @event.location %>
           <p><%= @event.location.blank? ? 'Not specified yet' : @event.location %><i class="icon-map-marker"></i></p>
       <% end %>
-      <p>Start: <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
+      <p><span class="event-label">Start: </span> <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
 
-      <p>End: <%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
+      <p><span class="event-label">End: </span><%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
+
 
       <p>
-        People:
+        <span class="event-label">People:</span>
       </p>
       <ul class="event-attendees">
+        <li>
+          <%= form_for(@event.event_invites.find_by_user_id(current_user.id), html: {class: 'no-margin'}, remote: true) do |f| %>
+              You - <%= f.submit 'Join', class: 'submitLink' %>
+              -
+              <%= f.submit 'Maybe', class: 'submitLink' %>
+              -
+              <%= f.submit 'Decline', class: 'submitLink' %> -
+              <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status}%> </div>
+          <% end %></li>
         <% @event.event_invites.each do |i| %>
-            <li><%= i.user.name %> - <%= render partial: 'attend_status', locals: {status: i.attend_status} %></li>
+            <% unless current_user?(i.user) %>
+                <li><%= i.user.name %> - <%= render partial: 'attend_status', locals: {status: i.attend_status} %></li>
+            <%end%>
         <% end %>
       </ul>
 
