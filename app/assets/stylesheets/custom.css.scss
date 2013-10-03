@@ -365,6 +365,12 @@ form.no-margin {
   margin: 0 0 0 0;
 }
 
+@media (min-width: 768px) {
+  #nav-event-mobile {
+    display: none;
+  }
+}
+
 
 
 
