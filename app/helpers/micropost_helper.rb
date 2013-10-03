@@ -10,7 +10,7 @@ module MicropostHelper
       emails = get_emails(user_names)
       unless emails.empty?
         Rails.logger.info("Trying to send mail to #{emails.join(',')}")
-        send_simple_message(sender, emails, message)
+        send_mentioned_message(sender, emails, message)
       end
     end
   end

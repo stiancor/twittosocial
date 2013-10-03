@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  include EventsHelper
 
   before_filter :signed_in_user
   before_filter :user_is_invited, only: [:edit, :update, :destroy, :show]
@@ -24,6 +25,9 @@ class EventsController < ApplicationController
     @event.user = current_user
     if @event.save
       @event.event_invites.create(user_id: current_user.id, attend_status: 'yes')
+      if @event.send_mail
+        send_email_to_all_invites(@event)
+      end
       flash[:success] = 'Event created!'
       redirect_to events_path
     else
@@ -41,6 +45,9 @@ class EventsController < ApplicationController
   def update
     if @event.update_attributes(params[:event])
       @event.event_invites.create(user_id: current_user.id, attend_status: 'yes')
+      if @event.send_mail
+        send_email_to_all_invites(@event)
+      end
       flash[:success] = 'Event was updated'
       redirect_to events_path
     else

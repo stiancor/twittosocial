@@ -2,7 +2,7 @@ require 'rest_client'
 
 module MailHelper
 
-  def send_simple_message (sender, recipients, message)
+  def send_mentioned_message(sender, recipients, message)
     RestClient.post "https://api:#{ENV['MAILGUN_KEY']}@api.mailgun.net/v2/#{ENV['MAILGUN_SERVER']}/messages",
                     :from => "TwittoSocial <no-reply@twittosocial.com>",
                     :to => recipients.join(','),
@@ -20,6 +20,15 @@ module MailHelper
                     :html => forgotten_password_message(token)
   end
 
+  def send_event_invite(event, recipients, subject)
+    RestClient.post "https://api:#{ENV['MAILGUN_KEY']}@api.mailgun.net/v2/#{ENV['MAILGUN_SERVER']}/messages",
+                    :from => "TwittoSocial <no-reply@twittosocial.com>",
+                    :to => recipients.join(','),
+                    :sender => "TwittoSocial",
+                    :subject => subject,
+                    :html => event_invite_message(event)
+  end
+
   private
 
   def build_mentioned_message(sender, message)
@@ -28,6 +37,10 @@ module MailHelper
 
   def forgotten_password_message(token)
     "<html><body>Please follow <a href='#{request.protocol}#{request.host_with_port}/reset_password/#{token}' target='_blank'>this</a> link to set a new password at TwittoSocial<body></html>"
+  end
+
+  def event_invite_message(event)
+    "<html><body>#{event.user.name} invited you to #{event.title}. Check out the invite at <a href='#{request.protocol}#{request.host_with_port}/events/#{event.id}' target='_blank'>TwittoSocial</a><body></html>"
   end
 
 end
