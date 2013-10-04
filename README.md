@@ -1,1 +1,1 @@
-This project originaly contained the sample app from the [*Ruby on Rails tutorial*](http://railstutorial.org) by Michael Hartl. I have however introduced more functionality, and there is more to come.
+This project originally was based on the "sample app" from the [*Ruby on Rails tutorial*](http://railstutorial.org) by Michael Hartl. I have however introduced much more functionality like events, likes, mail sending when mentioned and so on. This projects is a good fit for a group of friends or similar wanting a add free social network that is Open Source.
