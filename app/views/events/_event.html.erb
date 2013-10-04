@@ -1,6 +1,6 @@
 <hr>
 <div class="event">
-  <%= link_to gravatar_for(event.user, options = {size: 95}), event.user %>
+  <%= link_to gravatar_for(event.user, options = {size: 95, image_icon: 'monsterid'}), event.user %>
   <div><%= link_to event.title, event %></div>
   <div class="event-date"><%= event.start_time.blank? ? '' : event.start_time.strftime('%d %B %Y - %H:%M') %>
     <i class="icon-calendar"></i></div>

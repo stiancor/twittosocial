@@ -6,7 +6,7 @@
       <h3> <%= @event.title %></h3>
       <hr/>
       <div>
-        <%= link_to gravatar_for(@event.user, options = {size: 50}), @event.user %>
+        <%= link_to gravatar_for(@event.user, options = {size: 50, image_icon: 'monsterid'}), @event.user %>
         <% if current_user?(@event.user) %>
             <div class="event-organizer"><%= link_to 'You', @event.user %>
               <span class="username"> are organizer </span></div>
