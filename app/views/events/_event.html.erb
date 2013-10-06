@@ -1,7 +1,9 @@
 <hr>
 <div class="event">
   <%= link_to gravatar_for(event.user, options = {size: 95, image_icon: 'monsterid'}), event.user %>
-  <div><%= link_to event.title, event %></div>
+  <div><%= link_to event.title, event %>
+    <span id="event-attend-overview-<%= event.id %>" title="Confirmed attending / Invited">(<%= render partial: 'attend_overview', locals: {event_invites: event.event_invites} %>)</span>
+  </div>
   <div class="event-date"><%= event.start_time.blank? ? '' : event.start_time.strftime('%d %B %Y - %H:%M') %>
     <i class="icon-calendar"></i></div>
   <% unless event.location.blank? %>
@@ -20,7 +22,7 @@
       <%= f.submit 'Maybe', class: 'submitLink' %>
       -
       <%= f.submit 'Decline', class: 'submitLink' %> -
-      <div id="event-reply-status-<%= event.id %>" class='no_clear'><%= render partial: 'attend_status', locals: {status: event.event_invites.find_by_user_id(current_user.id).attend_status}%> </div>
+      <div id="event-reply-status-<%= event.id %>" class='no_clear'><%= render partial: 'attend_status', locals: {status: event.event_invites.find_by_user_id(current_user.id).attend_status} %> </div>
   <% end %>
 
   <% if current_user?(event.user) %>
