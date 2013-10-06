@@ -8,11 +8,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
+      <% if signed_in? %>
       <div id="nav-event-mobile">
         <ul class="nav pull-right">
             <li class="event-header"><%= render partial: 'layouts/event_header' %></li>
         </ul>
       </div>
+      <% end %>
 
       <div class="nav-collapse">
         <ul class="nav pull-right">
