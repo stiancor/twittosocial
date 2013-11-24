@@ -34,7 +34,7 @@ class Micropost < ActiveRecord::Base
   end
 
   def self.search(params)
-    tire.search(load: true, page: (params[:page] || 1)) do
+    tire.search(load: true, page: (params[:page] || 1), per_page: 30) do
       query { string params[:q]} if params[:q].present?
       sort { by :created_at, 'desc' }
     end
