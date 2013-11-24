@@ -2,11 +2,13 @@ class Micropost < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  attr_accessible :content, :admin_message
+  attr_accessible :content, :admin_message, :header_message
   belongs_to :user
   has_many :likes
   validates :user_id, presence: true
   validates :content, presence: true, length: {maximum: 250}
+
+  attr_accessor :header_message
 
   default_scope order: 'microposts.created_at DESC'
 

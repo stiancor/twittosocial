@@ -1,6 +1,11 @@
 <% if @feed_items.any? %>
     <ol class="microposts">
-      <%= render partial: 'shared/feed_item', collection: @feed_items %>
+      <% @feed_items.each do |feed_item| %>
+          <% if feed_item.header_message %>
+              <div class="timesegment"><%= feed_item.header_message %></div>
+          <% end %>
+          <%= render partial: 'shared/feed_item', locals: {feed_item: feed_item} %>
+      <% end %>
     </ol>
     <%= will_paginate @feed_items %>
 <% end %>
