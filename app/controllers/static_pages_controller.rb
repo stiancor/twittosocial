@@ -27,7 +27,6 @@ class StaticPagesController < ApplicationController
     one_day_set, two_days_set, three_days_set, one_week_set, two_weeks_set, one_month_set, three_months_set, six_months_set, one_year_set = false
     @feed_items.each_with_index do |f, i|
       days_ago = (Date.today - f.created_at.to_date).to_i
-      puts days_ago
       if days_ago == 1 && !one_day_set
         f.header_message = 'Yesterday'
         one_day_set = true
