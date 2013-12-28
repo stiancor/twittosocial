@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
                 match: /\B@(\S*)$/,
                 search: function (term, callback) {
                     callback($.map(mentions, function (mention) {
-                        return mention.indexOf(term) != -1 ? mention : null;
+                        return mention.match(new RegExp(term, "i")) ? mention : null;
                     }));
                 },
                 index: 1,
