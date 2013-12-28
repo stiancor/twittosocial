@@ -33,10 +33,10 @@ jQuery(document).ready(function ($) {
     mentions.push('alle - Hele gjengen')
     message.textcomplete([
             { // html
-                match: /\B@(\w*)$/,
+                match: /\B@(\S*)$/,
                 search: function (term, callback) {
                     callback($.map(mentions, function (mention) {
-                        return mention.indexOf(term) === 0 ? mention : null;
+                        return mention.indexOf(term) != -1 ? mention : null;
                     }));
                 },
                 index: 1,
