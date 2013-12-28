@@ -294,15 +294,6 @@ span.countdown {
   margin: -250px 0 0 -150px; /* CHANGE MARGINS TO ACCOMODATE THE NEW WIDTH (original = margin: -250px 0 0 -280px;) */
 }
 
-.usernames {
-  list-style: none;
-  margin: 10px 0 0 0;
-  li {
-    overflow: auto;
-    color: $grayLight;
-  }
-}
-
 .pagination ul li a {
   padding: 0 8px;
 }
@@ -375,6 +366,11 @@ form.no-margin {
   #nav-event-mobile {
     display: none;
   }
+}
+
+textarea.message {
+  width: 100%;
+  display: block;
 }
 
 

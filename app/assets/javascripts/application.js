@@ -29,6 +29,23 @@ jQuery(document).ready(function ($) {
     message.change(updateCountdown);
     message.keyup(updateCountdown);
 
+    var mentions = $('#micropost-input').data('url');
+    message.textcomplete([
+            { // html
+                match: /\B@(\w*)$/,
+                search: function (term, callback) {
+                    callback($.map(mentions, function (mention) {
+                        return mention.indexOf(term) === 0 ? mention : null;
+                    }));
+                },
+                index: 1,
+                replace: function (mention) {
+                    return '@' + mention.split(' - ')[0] + ' ';
+                }
+            }
+        ]);
+
+    // Event functionality
     $(".form_datetime").datetimepicker({
         format: "dd MM yyyy - hh:ii",
         autoclose: true,
