@@ -30,6 +30,7 @@ jQuery(document).ready(function ($) {
     message.keyup(updateCountdown);
 
     var mentions = $('#micropost-input').data('url');
+    mentions.push('alle - Hele gjengen')
     message.textcomplete([
             { // html
                 match: /\B@(\w*)$/,
