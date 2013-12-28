@@ -7,8 +7,7 @@ class StaticPagesController < ApplicationController
       else
         @feed_items = current_user.feed.paginate(page: params[:page])
       end
-      post_process_feed()
-      @usernames = User.all.collect { |user| user.username.to_s }.sort
+      post_process_feed
     end
   end
 
