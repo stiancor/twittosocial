@@ -30,8 +30,9 @@ jQuery(document).ready(function ($) {
     message.keyup(updateCountdown);
 
     var mentions = $('#micropost-input').data('url');
-    mentions.push('alle - Hele gjengen')
-    message.textcomplete([
+    if (mentions !== null) {
+        mentions.push('alle - Hele gjengen');
+        message.textcomplete([
             { // html
                 match: /\B@(\S*)$/,
                 search: function (term, callback) {
@@ -45,6 +46,7 @@ jQuery(document).ready(function ($) {
                 }
             }
         ]);
+    }
 
     // Event functionality
     $(".form_datetime").datetimepicker({
