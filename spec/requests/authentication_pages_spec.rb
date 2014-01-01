@@ -20,7 +20,7 @@ describe "AuthenticationPages" do
       it { should have_error_message }
 
       describe "next page does not show error message" do
-        before { click_link 'Home' }
+        before { click_link 'Sign in' }
         it { should_not have_error_message }
       end
     end

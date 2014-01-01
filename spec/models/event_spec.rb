@@ -15,14 +15,6 @@ describe Event do
   it { should respond_to(:end_time) }
   it { should respond_to(:invitation) }
 
-  describe 'accessible attributes' do
-    it 'should not have access to user' do
-      expect do
-        Event.new(user_id: 1)
-      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
-  end
-
   it { should be_valid }
 
   describe 'when user_id is not present' do

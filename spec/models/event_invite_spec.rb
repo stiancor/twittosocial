@@ -14,20 +14,6 @@ describe EventInvite do
   it { should respond_to(:user) }
   it { should respond_to(:event) }
 
-  describe 'accessible attributes' do
-    it 'should not have access to user' do
-      expect do
-        EventInvite.new(user_id: 1)
-      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
-
-    it 'should not have access to event' do
-      expect do
-        EventInvite.new(event_id: 1)
-      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
-  end
-
   it { should be_valid }
 
   describe 'when user_id is not present' do
