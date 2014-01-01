@@ -7,10 +7,10 @@ class UsersController < ApplicationController
   before_filter :admin_user, only: :destroy
 
   def index
-    if params[:query].present?
-      @users = User.search params[:query], :page => (params[:page] || 1)
-    else
-      @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.json {render json: @users}
     end
   end
 
