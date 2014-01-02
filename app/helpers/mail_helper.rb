@@ -32,7 +32,7 @@ module MailHelper
   private
 
   def build_mentioned_message(sender, message)
-    "<html><body>@#{sender} mentioned you in this post at <a href='http://www.twittosocial.com' target='_blank'>TwittoSocial</a>: <br/>#{message} <br/><br/>Check out the message at <a href='http://www.twittosocial.com' target='_blank'>TwittoSocial</a><body></html>"
+    "<html><body>@#{sender} mentioned you in this post at <a href='#{request.protocol}#{request.host_with_port}' target='_blank'>TwittoSocial</a>: <br/>#{message} <br/><br/>Check out the message at <a href='#{request.protocol}#{request.host_with_port}' target='_blank'>TwittoSocial</a><body></html>"
   end
 
   def forgotten_password_message(token)
