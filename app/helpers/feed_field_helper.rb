@@ -50,16 +50,18 @@ module FeedFieldHelper
     str.match(/[?.!,;]?$/) || ''
   end
 
+  HASHTAG_REGEX = /\A#([[:alnum:]]|_)+/
+
   def extract_tag(s)
-    s.match(/\A#[[:alnum:]]+/).to_s || s
+    s.match(HASHTAG_REGEX).to_s || s
   end
 
   def extract_end_of_tag(s)
-    s.sub(/\A#[[:alnum:]]+/, '') || s
+    s.sub(HASHTAG_REGEX, '') || s
   end
 
   def hashtag?(s)
-    s.match(/\A#[[:alnum:]]+/)
+    s.match(HASHTAG_REGEX)
   end
 
   def get_valid_search_term(s)

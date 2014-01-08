@@ -67,5 +67,10 @@ describe FeedFieldHelper do
       it { @micropost.should == "Passer bra at vi utsetter <a href='/?utf8=✓&q=%23dinner'>#dinner</a> @anhtr. Tilbake fra Barcelona nå. Kan informere at > 20 C føles like deilig i år som i fjor!" }
     end
 
+    describe "create hashtag with underscore" do
+      before { @micropost = parse_words_one_by_one("Hele denne #hashtag_med_underscore skal linkes ") }
+      it { @micropost.should == "Hele denne <a href='/?utf8=✓&q=%23hashtag_med_underscore'>#hashtag_med_underscore</a> skal linkes" }
+    end
+
   end
 end
