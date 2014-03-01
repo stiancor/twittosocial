@@ -1,6 +1,6 @@
 <div class="feedback">
   <div class="like" id="like_form_<%= micropost.id %>">
-    <% if micropost.like?(current_user) %>
+    <% if micropost.likes.any? {|like| like.user == current_user} %>
         <%= render partial: 'likes/unlike', locals: {micropost: micropost} %>
     <% else %>
         <%= render partial: 'likes/like', locals: {micropost: micropost} %>

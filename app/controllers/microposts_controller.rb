@@ -26,7 +26,7 @@ class MicropostsController < ApplicationController
   end
 
   def who_likes
-    @micropost = Micropost.find(params[:id])
+    @micropost = Micropost.includes(:likes).includes(likes: :user).find(params[:id])
     @users = []
     @micropost.likes.each do |l|
       @users << l.user

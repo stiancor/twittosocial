@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    Micropost.from_users_followed_by(self)
+    Micropost.includes(:user).includes(:likes).includes(:likes => :user).from_users_followed_by(self)
   end
 
   private
