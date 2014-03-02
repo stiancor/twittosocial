@@ -11,7 +11,7 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    @micropost = Like.find(params[:id]).micropost
+    @micropost = Like.includes(:micropost).find(params[:id]).micropost
     @micropost.unlike!(current_user)
     respond_to do |format|
       format.html { redirect_to root_path }
