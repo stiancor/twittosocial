@@ -12,8 +12,11 @@ SampleApp::Application.routes.draw do
   end
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
-  resources :events
   resources :event_invites
+  resources :events do
+    resources :event_comments
+  end
+
 
   root to: 'static_pages#home'
 

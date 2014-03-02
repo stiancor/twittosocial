@@ -11,13 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130809153620) do
+ActiveRecord::Schema.define(:version => 20140301212550) do
 
   create_table "codewords", :force => true do |t|
     t.string   "codeword"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "event_comments", :force => true do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "event_comments", ["event_id", "created_at"], :name => "index_event_comments_on_event_id_and_created_at"
 
   create_table "event_invites", :force => true do |t|
     t.string   "attend_status", :default => "no_reply"

@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   has_many :event_invites
   has_many :users, through: :event_invites, validate: false
+  has_many :event_comments
   belongs_to :user
 
   attr_accessible :title, :location, :start_time, :end_time, :invitation, :send_mail, :invite_all, :user_id, :user_ids

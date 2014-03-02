@@ -1,8 +1,8 @@
-<li class="<%= micropost_li_class(feed_item) %>" id="<%= feed_item.id %>">
+<li class="<%= micropost_admin_class(feed_item) %>" id="<%= feed_item.id %>">
   <%= link_to gravatar_for(feed_item.user), feed_item.user %>
   <span class="user">
     <%= link_to feed_item.user.name, feed_item.user %>
-    <% unless feed_item.user.username.nil? %><span class="username">@<%= feed_item.user.username %></span><% end %>
+    <span class="username">@<%= feed_item.user.username %></span>
     <% if feed_item.admin_message? %><span class="written-as-admin">Administrator message</span><% end %>
   </span>
   <span class="content"><%= format_msg(feed_item.content).html_safe %></span>

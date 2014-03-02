@@ -19,9 +19,13 @@
       <% if @event.location %>
           <p><%= @event.location.blank? ? 'Not specified yet' : @event.location %><i class="icon-map-marker"></i></p>
       <% end %>
-      <p><span class="event-label">Start: </span> <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
+      <p>
+        <span class="event-label">Start: </span> <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M') %>
+        <i class="icon-calendar"></i></p>
 
-      <p><span class="event-label">End: </span><%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %> <i class="icon-calendar"></i></p>
+      <p>
+        <span class="event-label">End: </span><%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %>
+        <i class="icon-calendar"></i></p>
 
 
       <p>
@@ -35,22 +39,51 @@
               <%= f.submit 'Maybe', class: 'submitLink' %>
               -
               <%= f.submit 'Decline', class: 'submitLink' %> -
-              <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status}%> </div>
+              <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status} %> </div>
           <% end %></li>
         <% @event.event_invites.each do |i| %>
             <% unless current_user?(i.user) %>
                 <li><%= i.user.name %> - <%= render partial: 'attend_status', locals: {status: i.attend_status} %></li>
-            <%end%>
+            <% end %>
         <% end %>
       </ul>
 
-      <p><span class="event-label">Invitation:</span> <div class="well"><%= simple_format(@event.invitation) %></div></p>
+      <p><span class="event-label">Invitation:</span>
+
+      <div class="well"><%= simple_format(@event.invitation) %></div>
+      </p>
       <% if current_user?(@event.user) %>
-          <%= link_to 'edit', [:edit, @event]  %> |
+          <%= link_to 'edit', [:edit, @event] %> |
       <% end %>
       <% if current_user.admin? || current_user?(@event.user) %>
           <%= link_to 'delete', @event, method: :delete, confirm: 'Are you sure?' %>
       <% end %>
     </div>
+
+    <%= form_for @event_comment, {url: event_event_comments_path(@event.id)} do |f| %>
+        <%= content_tag 'div', class: 'field', id: 'comment-input', data: {url: User.order('users.username').all.collect { |u| "#{u.username} - #{u.name}" }} do %>
+            <%= f.text_area :content, placeholder: 'Write new comment...', rows: 5, class: 'message' %>
+        <% end %>
+        <%= f.submit 'Comment', class: 'btn btn-primary' %>
+        <span class="comment-countdown"></span>
+    <% end %>
+
+    <% unless @event.event_comments.empty? %>
+        <ul class="event_comments">
+          <% @event.event_comments.each do |c| %>
+              <li>
+                <%= link_to gravatar_for(c.user), c.user %>
+                <span class="user">
+                    <%= link_to c.user.name, c.user %>
+                    <span class="username">@<%= c.user.username %></span>
+                </span>
+                <span class="content"><%= format_msg(c.content).html_safe %></span>
+                <span class="timestamp">
+                  Posted <%= time_ago_in_words c.created_at %> ago
+                </span>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
   </div>
 </div>
