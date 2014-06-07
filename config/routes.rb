@@ -6,15 +6,15 @@ SampleApp::Application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy, :who_likes] do
+    resources :likes, only: [:create, :destroy]
     member do
       get :who_likes
     end
   end
   resources :relationships, only: [:create, :destroy]
-  resources :likes, only: [:create, :destroy]
   resources :event_invites
   resources :events do
-    resources :event_comments
+    resources :event_comments, only: [:create]
   end
 
 
