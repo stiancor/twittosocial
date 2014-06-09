@@ -3,7 +3,7 @@
   <span class="user">
     <%= link_to feed_item.user.name, feed_item.user %>
     <span class="username">@<%= feed_item.user.username %></span>
-    <% if feed_item.admin_message? %><span class="written-as-admin">Administrator message</span><% end %>
+    <% if feed_item.admin_message? %><span class="written-as-admin">From admin</span><% end %>
   </span>
   <span class="content"><%= format_msg(feed_item.content).html_safe %></span>
   <span class="timestamp">Posted <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
