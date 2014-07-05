@@ -2,9 +2,10 @@
 <html>
 <head>
   <title><%= full_title(yield(:title))%> </title>
-  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= javascript_include_tag "application" %>
+  <meta name="Description" content="Open Source social network for small groups">
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <%= render 'layouts/shim' %>
   <script type="text/javascript">
