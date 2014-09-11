@@ -16,7 +16,7 @@ module MessageHelper
 
   def extract_user_names(message)
     if message.match /(\s@alle\b|\A@alle\b)/
-      User.select('username').where('username is not null').all.collect { |x| x.username }
+      User.select('username').where('username is not null').group('username').all.collect { |x| x.username }
     else
       message.scan(/(\s@\w+|\A@\w+)/).collect { |x| x[0].strip.gsub('@', '') }.uniq { |z| z }
     end
