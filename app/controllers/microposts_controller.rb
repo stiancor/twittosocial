@@ -1,6 +1,7 @@
 # encoding: utf-8
 class MicropostsController < ApplicationController
   include MicropostHelper
+  include MessageHelper
 
   before_filter :signed_in_user
   before_filter :correct_user, only: :destroy
