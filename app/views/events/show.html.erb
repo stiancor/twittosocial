@@ -81,6 +81,9 @@
                 <span class="timestamp">
                   Posted <%= time_ago_in_words c.created_at %> ago
                 </span>
+                <% if current_user?(c.user) %>
+                    <%= link_to 'delete', [@event, c], method: :delete, confirm: 'Are you sure?', title: c.content %>
+                <% end %>
               </li>
           <% end %>
         </ul>
