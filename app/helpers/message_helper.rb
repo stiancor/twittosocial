@@ -14,6 +14,17 @@ module MessageHelper
     end
   end
 
+  def send_email_if_mentioned_in_event(sender, event_comment)
+    user_names = extract_user_names(event_comment.content)
+    unless user_names.empty?
+      emails = get_emails(user_names)
+      unless emails.empty?
+        Rails.logger.info("Trying to send mail to #{emails.join(',')}")
+        send_event_mentioned_message(sender, emails, event_comment)
+      end
+    end
+  end
+
   def extract_user_names(message)
     if message.match /(\s@alle\b|\A@alle\b)/
       User.select('username').where('username is not null').group('username').all.collect { |x| x.username }

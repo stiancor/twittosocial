@@ -11,6 +11,15 @@ module MailHelper
                     :html => build_mentioned_message(sender, message)
   end
 
+  def send_event_mentioned_message(sender, recipients, event_comment)
+    RestClient.post "https://api:#{ENV['MAILGUN_KEY']}@api.mailgun.net/v2/#{ENV['MAILGUN_SERVER']}/messages",
+                    :from => "TwittoSocial <no-reply@twittosocial.com>",
+                    :to => recipients.join(','),
+                    :sender => "TwittoSocial",
+                    :subject => "@#{sender} mentioned you at TwittoSocial",
+                    :html => event_mention_message(event_comment)
+  end
+
   def send_forgot_password_message(recipients, token)
     RestClient.post "https://api:#{ENV['MAILGUN_KEY']}@api.mailgun.net/v2/#{ENV['MAILGUN_SERVER']}/messages",
                     :from => "TwittoSocial <no-reply@twittosocial.com>",
@@ -41,6 +50,10 @@ module MailHelper
 
   def event_invite_message(event)
     "<html><body>#{event.user.name} invited you to #{event.title}. Check out the invite at <a href='#{request.protocol}#{request.host_with_port}/events/#{event.id}' target='_blank'>TwittoSocial</a><body></html>"
+  end
+
+  def event_mention_message(event_comment)
+    "<html><body>#{event_comment.user.name} mentioned you in the event: \"#{event_comment.event.title}\". The message was: <br/> #{event_comment.content}. <br/> Check out the comment at <a href='#{request.protocol}#{request.host_with_port}/events/#{event_comment.event.id}' target='_blank'>TwittoSocial</a><body></html>"
   end
 
 end
