@@ -29,7 +29,7 @@ jQuery(document).ready(function ($) {
     message.change(updateCountdown);
     message.keyup(updateCountdown);
 
-    var mentions = $('#micropost-input').data('url');
+    var mentions = $('#micropost-input, #comment-input').data('url');
     if (mentions !== null) {
         mentions.push('alle - Hele gjengen');
         message.textcomplete([
