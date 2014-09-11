@@ -17,7 +17,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @users = User.where('id != ?', current_user.id).select('id, name')
+    get_users
     @event = Event.new
   end
 
@@ -32,7 +32,7 @@ class EventsController < ApplicationController
       flash[:success] = 'Event created!'
       redirect_to events_path
     else
-      @users = User.where('id != ?', current_user.id).select('id, name')
+      get_users
       @feed_items = []
       @usernames = User.all.collect { |user| user.username.to_s }.sort
       render 'new'
@@ -40,7 +40,7 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @users = User.where('id != ?', current_user.id).select('id, name')
+    get_users
   end
 
   def update
@@ -75,6 +75,10 @@ class EventsController < ApplicationController
   end
 
   private
+
+  def get_users
+    @users = User.where('id != ?', current_user.id).group('name').select('id, name')
+  end
 
   def user_is_invited
     if Event.includes(:event_invites).where('events.id = ? and event_invites.user_id = ?', params[:id], current_user.id).length == 0
