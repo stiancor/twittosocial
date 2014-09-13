@@ -8,7 +8,7 @@ module MailHelper
                     :to => recipients.join(','),
                     :sender => "TwittoSocial",
                     :subject => "@#{sender} mentioned you at TwittoSocial",
-                    :html => "#{render(template: 'microposts/mention', locals: {sender: sender, message: message})}"
+                    :html => "#{render(template: 'microposts/mention', locals: {sender: sender, message: message})}".html_safe
   end
 
   def send_event_mentioned_message(sender, recipients, event_comment)
