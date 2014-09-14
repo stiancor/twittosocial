@@ -8,7 +8,7 @@ module MailHelper
                     :to => recipients.join(','),
                     :sender => "TwittoSocial",
                     :subject => "@#{sender} mentioned you at TwittoSocial",
-                    :html => "#{render(template: 'microposts/mention', locals: {sender: sender, message: message})}".html_safe
+                    :html => build_mentioned_message(sender, message)
   end
 
   def send_event_mentioned_message(sender, recipients, event_comment)
@@ -17,7 +17,7 @@ module MailHelper
                     :to => recipients.join(','),
                     :sender => "TwittoSocial",
                     :subject => "@#{sender} mentioned you at TwittoSocial",
-                    :html => event_mention_message(event_comment)
+                    :html => render('events/mention', locals: {sender: sender, message: message})
   end
 
   def send_forgot_password_message(recipients, token)
