@@ -11,13 +11,13 @@
           <div style="margin-bottom:0;margin-top:0;padding:20px">
             <h2 style="font-weight:300;line-height:1.2em;text-align:center" align="center">
               <div style="display:inline-block;margin-bottom:15px">
-                <%= gravatar_for @event_comment.event.user, options = {size:96}%>
+                <%= gravatar_for current_user, options = {size:96}%>
               </div>
               <br>
               <%= @event_comment.user.name %><br> Mentioned you in a event comment!
             </h2>
-            <p>Hey <%= current_user.name %>,</p>
-            <p><%= @event_comment.user.name%> mentioned you in, <a href="<%= request.protocol %><%= request.host_with_port%>}/events/<%= @event_comment.event.id%>" target='_blank'> style="color:#007fb6;text-decoration:none" target="_blank"><%= @event_comment.event.title%></a></p>
+            <p>Hey there, </p>
+            <p><%= @event_comment.user.name%> just mentioned you in, <a href="<%= request.protocol %><%= request.host_with_port%>}/events/<%= @event_comment.event.id%>" target='_blank' style="color:#007fb6;text-decoration:none"><%= @event_comment.event.title%></a></p>
             <p style="margin-bottom:0">
             <blockquote style="color:#666666;font-family:Georgia,Times New Roman,sans-serif;font-size:16px;font-style:italic;line-height:1.4;margin:30px">“<%= @event_comment.content %>”</blockquote>
               <br>— Your friends at <span class="il">Twittosocial</span>
