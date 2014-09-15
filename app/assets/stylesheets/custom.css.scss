@@ -328,6 +328,10 @@ div.space-bottom {
   padding-bottom: 10px;
 }
 
+div.large-space-bottom {
+  padding-bottom: 50px;
+}
+
 div.modal {
   @media screen and (max-width: 480px) {
     margin-left: auto;
