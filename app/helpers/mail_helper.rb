@@ -17,7 +17,7 @@ module MailHelper
                     :to => recipients.join(','),
                     :sender => "TwittoSocial",
                     :subject => "@#{sender} mentioned you at TwittoSocial",
-                    :html => render('events/mention', locals: {sender: sender, message: message})
+                    :html => "#{render_to_string 'events/mention', locals: {sender: sender, message: event_comment}, layout: 'layouts/email'}"
   end
 
   def send_forgot_password_message(recipients, token)
