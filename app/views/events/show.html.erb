@@ -39,11 +39,11 @@
               <%= f.submit 'Maybe', class: 'submitLink' %>
               -
               <%= f.submit 'Decline', class: 'submitLink' %> -
-              <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status} %> </div>
+              <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'events/attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status} %> </div>
           <% end %></li>
         <% @event.event_invites.each do |i| %>
             <% unless current_user?(i.user) %>
-                <li><%= i.user.name %> - <%= render partial: 'attend_status', locals: {status: i.attend_status} %></li>
+                <li><%= i.user.name %> - <%= render partial: 'events/attend_status', locals: {status: i.attend_status} %></li>
             <% end %>
         <% end %>
       </ul>
@@ -60,6 +60,7 @@
       <% end %>
     </div>
 
+    <%= render 'shared/error_messages', object: @event_comment %>
     <%= form_for @event_comment, {url: event_event_comments_path(@event.id)} do |f| %>
         <%= content_tag 'div', class: 'field', id: 'comment-input', data: {url: User.order('users.username').all.collect { |u| "#{u.username} - #{u.name}" }} do %>
             <%= f.text_area :content, placeholder: 'Write new comment...', rows: 5, class: 'message' %>

@@ -11,6 +11,9 @@ class EventCommentsController < ApplicationController
       send_email_if_mentioned_in_event(current_user.username, @event_comment)
       flash[:success] = 'Comment created!'
       redirect_to @event_comment.event
+    else
+      @event = @event_comment.event
+      render 'events/show'
     end
   end
 
