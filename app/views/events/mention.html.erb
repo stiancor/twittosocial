@@ -1,33 +1,15 @@
-<div style="background:whitesmoke" bgcolor="whitesmoke">
-  <div style="background:whitesmoke;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:20px 10px;text-align:center" align="center">
-    <table width="100%" style="border-collapse:collapse;border-spacing:0;margin:0 auto;max-width:600px;width:100%">
-      <tbody><tr>
-        <td style="color:#999999;font-size:13px;margin-bottom:0;margin-top:0;padding:20px;text-align:center" align="center">
-          <h1 style="margin:0"><img src="http://twittosocial.herokuapp.com/SmallLogo.png"></h1>
-        </td>
-      </tr>
-      <tr>
-        <td style="background:white;color:#333333;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.4em;padding-bottom:40px;text-align:left" align="left" bgcolor="white">
-          <div style="margin-bottom:0;margin-top:0;padding:20px">
-            <h2 style="font-weight:300;line-height:1.2em;text-align:center" align="center">
-              <div style="display:inline-block;margin-bottom:15px">
-                <%= gravatar_for current_user, options = {size:96}%>
-              </div>
-              <br>
-              <%= @event_comment.user.name %><br> Mentioned you!
-            </h2>
-            <p>Hey there, </p>
-            <p><%= @event_comment.user.name%> just mentioned you in: <a href='https://twittosocial.herokuapp.com/events/<%= @event_comment.event.id %>' target='_blank' style='color:#007fb6;text-decoration:none'><%= @event_comment.event.title %></a></p>
-            <p style="margin-bottom:0">
-            <blockquote style="color:#666666;font-family:Georgia,Times New Roman,sans-serif;font-size:16px;font-style:italic;line-height:1.4;margin:30px">“<%= @event_comment.content %>”</blockquote>
-              <br>— Your friends at <span class="il">Twittosocial</span>
-            </p>
-
-          </div>
-        </td>
-      </tr>
-      </tbody></table>
+<h2 style="font-weight:300;line-height:1.2em;text-align:center" align="center">
+  <div style="display:inline-block;margin-bottom:15px">
+    <%= gravatar_for current_user, options = {size: 96} %>
   </div>
-
-  <img src="https://ci4.googleusercontent.com/proxy/1SF-ArwOOnsjrvjcSY05vDd1lQLa8IHNJMWcyYRPumCg5BLUrqZ35tRpOvsgZ2tVGtVKrtMFIOIzMni-Ixxg-MJq0DumLkMT8skx2F6D9RjpKZBq3lXTgELmmsTb51ibatpXLEAqjogWXioie0Dtxk-j81xY79oLRHbNoIhpEJo1Nf2_jKcYjEq83tVstV7tnfnilUYcUL6kt6sPpteVqd4rtyvpdeBMiKKAkmentXUi7l6pSZIzj5RI2LnJKWOCla67Fq4wc34Z1H1Lmy1iepDUeie6F_ExsLKvHCeHXtMNvIDiEoueSdr_i80T8yqlgPoxZvLwc4qhu6j31K0VkCZyeGMMiDFqSW7HRgHd38Rwdn9fMZ3HTFS4h7BYkADlW-hJB6_YBx-JY45CgwtxVEPvwRUP6FQyLqmGcTY2b_R1wTtklgVyHs0=s0-d-e1-ft#http://email.strava.com/wf/open?upn=EEW13zekVXfoTZUg3N-2BPu7PhScri8jHKTD6FQtWLsvOjS4bg87RJCNRRi-2F-2FsPnoJ13mZMcmlEOdPPTeuE3QMbDoYRSAQ0hiSIPSruC8hHuYuLO88aPwaX18zYwW1ulLKEKkuvm2-2BGPziADDgjoGptYyBxNNaDflme3nDAVLShX3YvnmwMTul2ZNzX3r2yJQJMhRZ4pDlOMb2ozmvFWElkxZk7V6MpgvGUJMUOLLXG5Ah-2FKrBPnAezmPk-2B6c7u8-2Bh" alt="" width="1" height="1" border="0" style="min-height:1px!important;width:1px!important;border-width:0!important;margin-top:0!important;margin-bottom:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;padding-right:0!important;padding-left:0!important"><div class="yj6qo"></div><div class="adL">
-</div></div>
+  <br>
+  <%= @event_comment.user.name %>
+  <br> Mentioned you!
+</h2>
+<p>Hey there, </p>
+<p><%= @event_comment.user.name %> just mentioned you in:
+  <a href='<%= get_url %>/events/<%= @event_comment.event.id %>' target='_blank' style='color:#007fb6;text-decoration:none'><%= @event_comment.event.title %></a>
+</p>
+<p style="margin-bottom:0">
+<blockquote style="color:#666666;font-family:Georgia,Times New Roman,sans-serif;font-size:16px;font-style:italic;line-height:1.4;margin:30px">“<%= @event_comment.content %>”
+</blockquote>

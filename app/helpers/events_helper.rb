@@ -13,4 +13,9 @@ module EventsHelper
       user.email
     }
   end
+
+  def get_url
+    request.protocol + request.host_with_port
+  end
+
 end
