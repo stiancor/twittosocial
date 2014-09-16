@@ -26,7 +26,7 @@ module MailHelper
                     :to => recipients,
                     :sender => "TwittoSocial",
                     :subject => "Forgot password on TwittoSocial",
-                    :html => forgotten_password_message(token)
+                    :html => render_to_string('users/reset_password_mail', layout: 'layouts/email', locals: {token: token})
   end
 
   def send_event_invite(recipients, subject)
@@ -39,9 +39,5 @@ module MailHelper
   end
 
   private
-
-  def forgotten_password_message(token)
-    "<html><body>Please follow <a href='#{request.protocol}#{request.host_with_port}/reset_password/#{token}' target='_blank'>this</a> link to set a new password at TwittoSocial<body></html>"
-  end
 
 end
