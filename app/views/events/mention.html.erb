@@ -14,10 +14,10 @@
                 <%= gravatar_for current_user, options = {size:96}%>
               </div>
               <br>
-              <%= @event_comment.user.name %><br> Mentioned you in a event comment!
+              <%= @event_comment.user.name %><br> Mentioned you!
             </h2>
             <p>Hey there, </p>
-            <p><%= @event_comment.user.name%> just mentioned you in: <a href='<%= request.protocol %><%= request.host_with_port %>}/events/<%= @event_comment.event.id %>' target='_blank' style='color:#007fb6;text-decoration:none'><%= @event_comment.event.title %></a></p>
+            <p><%= @event_comment.user.name%> just mentioned you in: <a href='https://twittosocial.herokuapp.com/events/<%= @event_comment.event.id %>' target='_blank' style='color:#007fb6;text-decoration:none'><%= @event_comment.event.title %></a></p>
             <p style="margin-bottom:0">
             <blockquote style="color:#666666;font-family:Georgia,Times New Roman,sans-serif;font-size:16px;font-style:italic;line-height:1.4;margin:30px">“<%= @event_comment.content %>”</blockquote>
               <br>— Your friends at <span class="il">Twittosocial</span>
