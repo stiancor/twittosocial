@@ -1,0 +1,12 @@
+<h2 style="font-weight:300;line-height:1.2em;text-align:center" align="center">
+  <%= render 'shared/email_gravatar' %>
+  <br>
+  <%= @event.user.name %>
+  <br> Just invited you!
+</h2>
+<p>Hey there, </p>
+<p><%= @event.user.name %> just invited you to the event
+  <a href='<%= get_url %>/events/<%= @event.id %>' target='_blank' style='color:#007fb6;text-decoration:none'><%= @event.title %></a>
+</p>
+<p>Please take the time to answer this invite</p>
+<p style="margin-bottom:0">
