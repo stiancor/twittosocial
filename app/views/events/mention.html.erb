@@ -1,7 +1,5 @@
 <h2 style="font-weight:300;line-height:1.2em;text-align:center" align="center">
-  <div style="display:inline-block;margin-bottom:15px">
-    <%= gravatar_for current_user, options = {size: 96} %>
-  </div>
+  <%= render 'shared/email_gravatar' %>
   <br>
   <%= @event_comment.user.name %>
   <br> Mentioned you!

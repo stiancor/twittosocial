@@ -1,0 +1,12 @@
+<h2 style="font-weight:300;line-height:1.2em;text-align:center" align="center">
+  <%= render 'shared/email_gravatar' %>
+  <br>
+  <%= @micropost.user.name %>
+  <br> Mentioned you!
+</h2>
+<p>Hey there, </p>
+<p><%= @micropost.user.name %> mentioned you in this micropost</p>
+<p style="margin-bottom:0">
+<blockquote style="color:#666666;font-family:Georgia,Times New Roman,sans-serif;font-size:16px;font-style:italic;line-height:1.4;margin:30px">“<%= @micropost.content %>”
+</blockquote>
+<p>Check out the discussion at <a href='<%= get_url %>' target='_blank' style='color:#007fb6;text-decoration:none'>Twittosocial</a></p>

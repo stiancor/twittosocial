@@ -8,7 +8,7 @@ module MailHelper
                     :to => recipients.join(','),
                     :sender => "TwittoSocial",
                     :subject => "@#{sender} mentioned you at TwittoSocial",
-                    :html => build_mentioned_message(sender, message)
+                    :html => "#{render_to_string 'microposts/mention', locals: {sender: sender, message: message}, layout: 'layouts/email'}"
   end
 
   def send_event_mentioned_message(sender, recipients, event_comment)
@@ -16,7 +16,7 @@ module MailHelper
                     :from => "TwittoSocial <no-reply@twittosocial.com>",
                     :to => recipients.join(','),
                     :sender => "TwittoSocial",
-                    :subject => "@#{sender} mentioned you at TwittoSocial",
+                    :subject => "@#{sender} mentioned you in an event comment at TwittoSocial",
                     :html => "#{render_to_string 'events/mention', locals: {sender: sender, message: event_comment}, layout: 'layouts/email'}"
   end
 
@@ -50,10 +50,6 @@ module MailHelper
 
   def event_invite_message(event)
     "<html><body>#{event.user.name} invited you to #{event.title}. Check out the invite at <a href='#{request.protocol}#{request.host_with_port}/events/#{event.id}' target='_blank'>TwittoSocial</a><body></html>"
-  end
-
-  def event_mention_message(event_comment)
-    "<html><body>#{event_comment.user.name} mentioned you in the event: \"#{event_comment.event.title}\". The message was: <br/> #{event_comment.content}. <br/> Check out the comment at <a href='#{request.protocol}#{request.host_with_port}/events/#{event_comment.event.id}' target='_blank'>TwittoSocial</a><body></html>"
   end
 
 end
