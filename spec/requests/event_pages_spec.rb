@@ -18,6 +18,7 @@ describe "EventPages" do
       before { visit events_path }
       it do
         should have_selector('h1', text: 'All upcoming events')
+        should have_selector('h3', text: 'Sorry, no events planned :-/')
         should have_link 'Create new event'
       end
     end
