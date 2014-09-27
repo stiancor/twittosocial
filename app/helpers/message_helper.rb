@@ -4,7 +4,7 @@ module MessageHelper
   include MailHelper
 
   def send_email_if_registered_usernames(sender, message)
-    user_names = extract_user_names(message)
+    user_names = find_users_to_email(message)
     unless user_names.empty?
       emails = get_emails(user_names)
       unless emails.empty?
@@ -15,7 +15,7 @@ module MessageHelper
   end
 
   def send_email_if_mentioned_in_event(sender, event_comment)
-    user_names = extract_user_names(event_comment.content)
+    user_names = find_users_in_event_message(event_comment)
     unless user_names.empty?
       emails = get_emails(user_names)
       unless emails.empty?
@@ -25,12 +25,24 @@ module MessageHelper
     end
   end
 
-  def extract_user_names(message)
+  def find_users_to_email(message)
     if message.match /(\s@alle\b|\A@alle\b)/
       User.select('username').where('username is not null').group('username').all.collect { |x| x.username }
     else
-      message.scan(/(\s@\w+|\A@\w+)/).collect { |x| x[0].strip.gsub('@', '') }.uniq { |z| z }
+      extract_usernames(message)
     end
+  end
+
+  def find_users_in_event_message(event_comment)
+    if event_comment.content.match /(\s@alle\b|\A@alle\b)/
+      event_comment.event.event_invites.find_all {|i| i.attend_status != 'no' }.collect {|i| i.user.username }
+    else
+      extract_usernames(event_comment.content)
+    end
+  end
+
+  def extract_usernames(message)
+    message.scan(/(\s@\w+|\A@\w+)/).collect { |x| x[0].strip.gsub('@', '') }.uniq { |z| z }
   end
 
   def get_emails(user_names)
