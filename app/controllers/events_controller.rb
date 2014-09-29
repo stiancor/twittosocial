@@ -77,7 +77,7 @@ class EventsController < ApplicationController
   private
 
   def get_users
-    @users = User.where('id != ?', current_user.id).group('name').select('id, name')
+    @users = User.where('id != ?', current_user.id).order('name').select('id, name')
   end
 
   def user_is_invited
