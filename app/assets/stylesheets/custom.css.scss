@@ -275,6 +275,11 @@ span.username {
   color: $grayLight;
 }
 
+span.message-username {
+  font-style: italic;
+  color: #777777;
+}
+
 span.written-as-admin {
   color: $grayLight;
   float: right;

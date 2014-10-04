@@ -8,24 +8,26 @@ module FeedFieldHelper
   end
 
   def parse_words_one_by_one(content)
-    return_array = []
+    message = []
     content.split(' ').each_with_index  do |s, i|
       if absolute_link?(s)
         url_to_follow, url_to_show = extract_url(s)
-        return_array[i] = "<a href='#{url_to_follow}' target='_blank'>#{url_to_follow}</a>#{url_to_show}"
+        message[i] = "<a href='#{url_to_follow}' target='_blank'>#{url_to_follow}</a>#{url_to_show}"
       elsif absolute_link_without_http?(s)
         url_to_follow, url_to_show = extract_url(s)
-        return_array[i] = "<a href='http://#{url_to_follow}' target='_blank'>#{url_to_follow}</a>#{url_to_show}"
+        message[i] = "<a href='http://#{url_to_follow}' target='_blank'>#{url_to_follow}</a>#{url_to_show}"
       elsif hashtag?(s)
         tag = extract_tag(s)
         not_part_of_tag = extract_end_of_tag(s)
         search_term = get_valid_search_term(tag)
-        return_array[i] = "<a href='/?utf8=✓&q=#{search_term}'>#{tag}</a>#{not_part_of_tag}"
+        message[i] = "<a href='/?utf8=✓&q=#{search_term}'>#{tag}</a>#{not_part_of_tag}"
+      elsif username?(s)
+        message[i] = "<span class='message-username'>#{s}</span>"
       else
-        return_array[i] = s
+        message[i] = s
       end
     end
-    return_array.join(' ')
+    message.join(' ')
   end
 
   def extract_url(s)
@@ -62,6 +64,11 @@ module FeedFieldHelper
 
   def hashtag?(s)
     s.match(HASHTAG_REGEX)
+  end
+
+  USERNAME_REGEX = /(\s@\w+|\A@\w+)/
+  def username?(s)
+    s.match(USERNAME_REGEX)
   end
 
   def get_valid_search_term(s)
