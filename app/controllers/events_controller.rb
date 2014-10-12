@@ -12,7 +12,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = Event.includes(:event_invites => :user).find(params[:id])
     @event_comment = EventComment.new
   end
 
