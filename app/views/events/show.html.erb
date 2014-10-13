@@ -43,7 +43,7 @@
           <% end %></li>
         <% @event.event_invites.sort{|a,b| a.user.name.upcase <=> b.user.name.upcase}.each do |i| %>
             <% unless current_user?(i.user) %>
-                <li><%= i.user.name %> - <%= render partial: 'events/attend_status', locals: {status: i.attend_status} %></li>
+                <li><%= i.user.name %> <span class="username">(@<%= i.user.username %>)<span> - <%= render partial: 'events/attend_status', locals: {status: i.attend_status} %></li>
             <% end %>
         <% end %>
       </ul>
