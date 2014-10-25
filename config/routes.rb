@@ -14,6 +14,9 @@ SampleApp::Application.routes.draw do
   resources :relationships, only: [:create, :destroy]
   resources :event_invites
   resources :events do
+    collection do
+      get :old
+    end
     resources :event_comments, only: [:create, :destroy]
   end
 

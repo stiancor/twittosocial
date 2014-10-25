@@ -1,0 +1,14 @@
+<% provide(:title, 'Old events') %>
+
+<h1>Event history!</h1>
+
+<% if @events.empty? %>
+    <h3>No old events found </h3>
+<% else %>
+    <div class="events">
+      <%= render @events %>
+    </div>
+<% end %>
+<hr>
+<%= link_to 'See new events', events_path %>
+
