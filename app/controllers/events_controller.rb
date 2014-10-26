@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   def old
     @events = Event.includes(:event_invites)
     .where('end_time < ? and event_invites.user_id = ?', DateTime.now, current_user.id)
-    .paginate(page: params[:page], per_page: 10).order('start_time')
+    .paginate(page: params[:page], per_page: 10).order('start_time desc')
   end
 
   def show
