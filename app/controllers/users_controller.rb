@@ -63,7 +63,7 @@ class UsersController < ApplicationController
   end
 
   def send_password_link
-    user = User.find_by_email(params[:user][:email])
+    user = User.find_by_email(params[:user][:email].downcase)
     if user
       token = SecureRandom.urlsafe_base64
       user.update_attribute(:forgotten_password_key, token)
