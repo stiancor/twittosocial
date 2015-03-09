@@ -53,7 +53,8 @@ jQuery(document).ready(function ($) {
         format: "dd MM yyyy - hh:ii",
         autoclose: true,
         todayBtn: true,
-        pickerPosition: "bottom-left"
+        pickerPosition: "bottom-left",
+        weekStart: 1
     });
 
     $('.checkall').on('click', function () {
