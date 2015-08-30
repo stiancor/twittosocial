@@ -16,12 +16,15 @@ module MessageHelper
 
   def send_email_if_mentioned_in_event(sender, event_comment)
     user_names = find_users_in_event_message(event_comment)
-    unless user_names.empty?
+    emails = []
+    if user_names.empty?
+      emails = event_comment.event.event_invites.find_all { |invite| invite.attend_status != 'no' }.collect { |invite| invite.user.email }
+    else
       emails = get_emails(user_names)
-      unless emails.empty?
-        Rails.logger.info("Trying to send mail to #{emails.join(',')}")
-        send_event_mentioned_message(sender, emails)
-      end
+    end
+    unless emails.empty?
+      Rails.logger.info("Trying to send mail to #{emails.join(',')}")
+      send_event_mentioned_message(sender, emails)
     end
   end
 
@@ -35,7 +38,7 @@ module MessageHelper
 
   def find_users_in_event_message(event_comment)
     if event_comment.content.match /(\s@alle\b|\A@alle\b)/
-      event_comment.event.event_invites.find_all {|i| i.attend_status != 'no' }.collect {|i| i.user.username }
+      event_comment.event.event_invites.find_all { |i| i.attend_status != 'no' }.collect { |i| i.user.username }
     else
       extract_usernames(event_comment.content)
     end
