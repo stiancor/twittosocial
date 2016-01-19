@@ -20,11 +20,11 @@
           <p><%= @event.location.blank? ? 'Not specified yet' : @event.location %><i class="icon-map-marker"></i></p>
       <% end %>
       <p>
-        <span class="event-label">Start: </span> <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%d %B %Y - %H:%M') %>
+        <span class="event-label">Start: </span> <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%A %d. %B %Y - %H:%M') %>
         <i class="icon-calendar"></i></p>
 
       <p>
-        <span class="event-label">End: </span><%= @event.end_time.blank? ? '' : @event.end_time.strftime('%d %B %Y - %H:%M') %>
+        <span class="event-label">End: </span><%= @event.end_time.blank? ? '' : @event.end_time.strftime('%A %d. %B %Y - %H:%M') %>
         <i class="icon-calendar"></i></p>
 
 
