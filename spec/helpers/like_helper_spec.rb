@@ -12,7 +12,7 @@ describe LikeHelper do
 
     describe "Micropost has no likes" do
       before { @micropost = Micropost.new(content: "Some message") }
-      it { likes_link_generator(@micropost).should == "0 likes" }
+      it { expect(likes_link_generator(@micropost)).to eq("0 likes") }
     end
 
     describe "Micropost has one like" do
@@ -21,7 +21,7 @@ describe LikeHelper do
         @micropost.save
         @micropost.like!(user)
       end
-      it { likes_link_generator(@micropost).should =~ /Person \d+? likes post/ }
+      it { expect(likes_link_generator(@micropost)).to match(/Person \d+? likes post/) }
     end
 
     describe "Micropost has two likes" do
@@ -31,7 +31,7 @@ describe LikeHelper do
         @micropost.like!(user)
         @micropost.like!(user2)
       end
-      it { likes_link_generator(@micropost).should =~ /Person \d+? and Person \d+? like post/ }
+      it { expect(likes_link_generator(@micropost)).to match(/Person \d+? and Person \d+? like post/) }
     end
 
     describe "Micropost has three likes" do
@@ -42,7 +42,7 @@ describe LikeHelper do
         @micropost.like!(user2)
         @micropost.like!(user3)
       end
-      it { likes_link_generator(@micropost).should =~ /Person \d+?, Person \d+? and Person \d+? like post/ }
+      it { expect(likes_link_generator(@micropost)).to match(/Person \d+?, Person \d+? and Person \d+? like post/) }
     end
 
     describe "Micropost has four likes" do
@@ -54,7 +54,7 @@ describe LikeHelper do
         @micropost.like!(user3)
         @micropost.like!(user4)
       end
-      it { likes_link_generator(@micropost).should =~ /Person \d+?, Person \d+?, Person \d+? and 1 other like post/ }
+      it { expect(likes_link_generator(@micropost)).to match(/Person \d+?, Person \d+?, Person \d+? and 1 other like post/) }
     end
 
     describe "Micropost has five likes" do
@@ -67,7 +67,7 @@ describe LikeHelper do
         @micropost.like!(user4)
         @micropost.like!(user5)
       end
-      it { likes_link_generator(@micropost).should =~ /Person \d+?, Person \d+?, Person \d+? and 2 others like post/ }
+      it { expect(likes_link_generator(@micropost)).to match(/Person \d+?, Person \d+?, Person \d+? and 2 others like post/) }
     end
   end
 

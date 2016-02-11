@@ -8,7 +8,7 @@ describe "EventPages" do
 
   describe "not signed in" do
     before { visit events_path }
-    it { should have_link("Sign in", href: signin_path) }
+    it { is_expected.to have_link("Sign in", href: signin_path) }
   end
 
   describe "with signed in user" do
@@ -17,9 +17,9 @@ describe "EventPages" do
     describe "Should get list of event" do
       before { visit events_path }
       it do
-        should have_selector('h1', text: 'All upcoming events')
-        should have_selector('h3', text: 'Sorry, no events planned :-/')
-        should have_link 'Create new event'
+        is_expected.to have_selector('h1', text: 'All upcoming events')
+        is_expected.to have_selector('h3', text: 'Sorry, no events planned :-/')
+        is_expected.to have_link 'Create new event'
       end
     end
   end

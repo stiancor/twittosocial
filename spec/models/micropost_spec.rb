@@ -10,19 +10,22 @@ describe Micropost do
 
   subject { @micropost }
 
-  it { should respond_to(:content) }
-  it { should respond_to(:user_id) }
-  it { should respond_to(:user) }
-  it { should respond_to(:likes) }
-  it { should respond_to(:admin_message) }
+  it { is_expected.to respond_to(:content) }
+  it { is_expected.to respond_to(:user_id) }
+  it { is_expected.to respond_to(:user) }
+  it { is_expected.to respond_to(:likes) }
+  it { is_expected.to respond_to(:admin_message) }
 
-  its(:user) { should == user }
+  describe '#user' do
+    subject { super().user }
+    it { is_expected.to eq(user) }
+  end
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe "when user_id is not present" do
     before { @micropost.user_id = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe "accessible attributes" do
@@ -35,12 +38,12 @@ describe Micropost do
 
   describe "with blank content" do
     before { @micropost.content = " " }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe "with more than 250 chars" do
     before { @micropost.content = "a"*251 }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
 end

@@ -10,8 +10,8 @@ describe "Static pages" do
     before {
       visit root_path
     }
-    it { should have_title(full_title('')) }
-    it { should_not have_title('| Home') }
+    it { is_expected.to have_title(full_title('')) }
+    it { is_expected.not_to have_title('| Home') }
 
     describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
@@ -24,7 +24,7 @@ describe "Static pages" do
 
       it "should render the user feed" do
         user.feed.each do |item|
-          page.should have_selector("li##{item.id}", text: item.content)
+          expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
 
@@ -35,8 +35,8 @@ describe "Static pages" do
           visit root_path
         end
 
-        it { should have_link("0 following", href: following_user_path(user)) }
-        it { should have_link("1 followers", href: followers_user_path(user)) }
+        it { is_expected.to have_link("0 following", href: following_user_path(user)) }
+        it { is_expected.to have_link("1 followers", href: followers_user_path(user)) }
       end
     end
   end
@@ -45,37 +45,37 @@ describe "Static pages" do
     before {
       visit help_path
     }
-    it { should have_selector('h1', text: 'Help') }
-    it { should have_title(full_title('Help')) }
+    it { is_expected.to have_selector('h1', text: 'Help') }
+    it { is_expected.to have_title(full_title('Help')) }
   end
 
   describe "About page" do
     before {
       visit about_path
     }
-    it { should have_selector('h1', text: 'About Us') }
-    it { should have_title(full_title('About Us')) }
+    it { is_expected.to have_selector('h1', text: 'About Us') }
+    it { is_expected.to have_title(full_title('About Us')) }
   end
 
   describe "Contact page" do
     before {
       visit contact_path
     }
-    it { should have_selector('h1', text: 'Contact') }
-    it { should have_title(full_title('Contact')) }
+    it { is_expected.to have_selector('h1', text: 'Contact') }
+    it { is_expected.to have_title(full_title('Contact')) }
   end
 
   it "should have the right links on the layout" do
     visit root_path
     click_link "Sign in"
-    page.should have_title(full_title('Sign in'))
+    expect(page).to have_title(full_title('Sign in'))
     click_link "About"
-    page.should have_title(full_title('About Us'))
+    expect(page).to have_title(full_title('About Us'))
     click_link "Contact"
-    page.should have_title(full_title('Contact'))
+    expect(page).to have_title(full_title('Contact'))
     click_link "twittosocial"
     click_link "Sign up now!"
-    page.should have_title(full_title('Sign up'))
+    expect(page).to have_title(full_title('Sign up'))
 
   end
 end

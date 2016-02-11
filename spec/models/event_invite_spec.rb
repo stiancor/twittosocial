@@ -10,30 +10,30 @@ describe EventInvite do
 
   subject { @event_invite }
 
-  it { should respond_to(:attend_status) }
-  it { should respond_to(:user) }
-  it { should respond_to(:event) }
+  it { is_expected.to respond_to(:attend_status) }
+  it { is_expected.to respond_to(:user) }
+  it { is_expected.to respond_to(:event) }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'when user_id is not present' do
     before { @event_invite.user_id = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when event_id is not present' do
     before { @event_invite.event_id = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when attend_status is not present' do
     before { @event_invite.attend_status = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when attend_status has invalid option' do
     before { @event_invite.attend_status = 'something' }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
 end

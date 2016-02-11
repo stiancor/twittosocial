@@ -9,57 +9,57 @@ describe Event do
 
   subject { @event }
 
-  it { should respond_to(:title) }
-  it { should respond_to(:location) }
-  it { should respond_to(:start_time) }
-  it { should respond_to(:end_time) }
-  it { should respond_to(:invitation) }
+  it { is_expected.to respond_to(:title) }
+  it { is_expected.to respond_to(:location) }
+  it { is_expected.to respond_to(:start_time) }
+  it { is_expected.to respond_to(:end_time) }
+  it { is_expected.to respond_to(:invitation) }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'when user_id is not present' do
     before { @event.user_id = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when title is not present' do
     before { @event.title = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when title is blank' do
     before { @event.title = ' ' }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when title is too long' do
     before { @event.title = 'a'*251 }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when start_time is not present' do
     before { @event.start_time = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when end_time is not present' do
     before { @event.end_time = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when invitation is nil' do
     before { @event.invitation = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when invitation is blank' do
     before { @event.invitation = ' ' }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'when invitation is too long' do
     before { @event.invitation = 'a'*3001 }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe 'start_time cannot be after end_time' do
@@ -67,7 +67,7 @@ describe Event do
       @event.start_time = DateTime.new.end_of_day
       @event.end_time = DateTime.new.at_beginning_of_day
     end
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
 end

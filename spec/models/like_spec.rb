@@ -11,18 +11,18 @@ describe Like do
 
   subject { @like }
 
-  it { should respond_to(:micropost_id) }
+  it { is_expected.to respond_to(:micropost_id) }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe "when user does not exist" do
     before { @like.user_id = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe "when micropost does not exist" do
     before { @like.micropost_id = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
 end
