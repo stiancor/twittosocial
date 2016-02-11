@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '1.9.3'
+ruby '2.2.1'
 
 gem 'rails', '3.2.22.1'
 gem 'bootstrap-sass', '2.0.4'
@@ -15,6 +15,7 @@ gem 'newrelic_rpm'
 group :development, :test do
   gem 'sqlite3', '1.3.11'
   gem 'rspec-rails', '2.99'
+  gem 'test-unit'
 end
 
 # Gems used only for assets and not required
