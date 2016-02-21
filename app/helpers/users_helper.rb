@@ -7,14 +7,12 @@ module UsersHelper
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
 
-  def non_existing_codeword?(codeword)
-    if Codeword.find_by_codeword(codeword.codeword).nil?
+  def existing_codeword?(codeword)
+    exist = Codeword.where('codeword = ?', codeword.codeword).to_a.size > 0
+    unless exist
       codeword.errors.add(:codeword, "is needed to create a user. Only the chosen ones will have it")
     end
-  end
-
-  def has_errors_in_any_objects?(array)
-    array.any? { |model| model.errors.any? }
+    exist
   end
 
 end

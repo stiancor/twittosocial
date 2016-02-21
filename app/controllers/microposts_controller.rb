@@ -7,7 +7,7 @@ class MicropostsController < ApplicationController
   before_filter :correct_user, only: :destroy
 
   def create
-    @micropost = current_user.microposts.build(params[:micropost])
+    @micropost = current_user.microposts.build(micropost_params)
     unless current_user.admin?
       @micropost.admin_message = false
     end
@@ -27,7 +27,7 @@ class MicropostsController < ApplicationController
   end
 
   def who_likes
-    @micropost = Micropost.includes(:likes).includes(likes: :user).find(params[:id])
+    @micropost = Micropost.includes(:likes).includes(likes: :user).references(:likes, :user).find(params[:id])
     @users = []
     @micropost.likes.each do |l|
       @users << l.user
@@ -43,6 +43,10 @@ class MicropostsController < ApplicationController
   def correct_user
     @micropost = current_user.microposts.find_by_id(params[:id])
     redirect_to root_path if @micropost.nil?
+  end
+
+  def micropost_params
+    params.require(:micropost).permit(:content, :admin_message)
   end
 
 end

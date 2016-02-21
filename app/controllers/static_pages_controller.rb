@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
     if signed_in?
       @micropost = current_user.microposts.build
       if params[:q].present?
-        @feed_items = Micropost.search params
+        @feed_items = Micropost.search(params[:q]).records.paginate(page: params[:page], per_page: 30)
       else
         @feed_items = current_user.feed.paginate(page: params[:page])
       end

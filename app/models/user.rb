@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  attr_accessible :name, :email, :password, :password_confirmation, :username
+  # attr_accessible :name, :email, :password, :password_confirmation, :username
   has_secure_password
   has_many :microposts, dependent: :destroy
   has_many :events
@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    Micropost.includes(:user).includes(:likes).includes(:likes => :user).from_users_followed_by(self)
+    Micropost.includes(:user).includes(:likes).includes(:likes => :user).references(:likes, :user).from_users_followed_by(self)
   end
 
   private

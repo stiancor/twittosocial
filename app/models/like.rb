@@ -1,5 +1,5 @@
 class Like < ActiveRecord::Base
-  attr_accessible :micropost_id
+  #attr_accessible :micropost_id
 
   belongs_to :micropost, class_name: "Micropost"
   belongs_to :user

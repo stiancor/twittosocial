@@ -6,19 +6,19 @@ class EventsController < ApplicationController
   before_filter :user_can_update, only: [:edit, :update, :destroy]
 
   def index
-    @events = Event.includes(:event_invites)
+    @events = Event.includes(:event_invites).references(:event_invites)
     .where('end_time > ? and event_invites.user_id = ?', DateTime.now, current_user.id)
     .paginate(page: params[:page]).order('start_time')
   end
 
   def old
-    @events = Event.includes(:event_invites)
+    @events = Event.includes(:event_invites).references(:event_invites)
     .where('end_time < ? and event_invites.user_id = ?', DateTime.now, current_user.id)
     .paginate(page: params[:page], per_page: 10).order('start_time desc')
   end
 
   def show
-    @event = Event.includes(:event_invites => :user).find(params[:id])
+    @event = Event.includes(:event_invites => :user).references(:event_invites, :user).find(params[:id])
     @event_comment = EventComment.new
   end
 
@@ -28,7 +28,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_user.events.build(params[:event])
+    @event = current_user.events.build(event_params)
     @event.user = current_user
     if @event.save
       @event.event_invites.create(user_id: current_user.id, attend_status: 'yes')
@@ -50,7 +50,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    if @event.update_attributes(params[:event])
+    if @event.update_attributes(event_params)
       @event.event_invites.create(user_id: current_user.id, attend_status: 'yes')
       if @event.send_mail
         send_email_to_all_invites(@event)
@@ -87,7 +87,7 @@ class EventsController < ApplicationController
   end
 
   def user_is_invited
-    if Event.includes(:event_invites).where('events.id = ? and event_invites.user_id = ?', params[:id], current_user.id).length == 0
+    if Event.includes(:event_invites).references(:event_invites).where('events.id = ? and event_invites.user_id = ?', params[:id], current_user.id).length == 0
       flash[:warning] = 'You have no access to this event!'
       redirect_to events_path
     end
@@ -100,5 +100,9 @@ class EventsController < ApplicationController
       @event = current_user.events.find_by_id(params[:id])
     end
     redirect_to event_path if @event.nil?
+  end
+
+  def event_params
+    params.require(:event).permit(:title, :location, :start_time, :end_time, :invitation, :send_mail, :invite_all, :user_id, :user_ids)
   end
 end

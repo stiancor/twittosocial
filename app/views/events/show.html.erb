@@ -56,13 +56,13 @@
           <%= link_to 'edit', [:edit, @event] %> |
       <% end %>
       <% if current_user.admin? || current_user?(@event.user) %>
-          <%= link_to 'delete', @event, method: :delete, confirm: 'Are you sure?' %>
+          <%= link_to 'delete', @event, method: :delete, data: { confirm: 'Are you sure?' }%>
       <% end %>
     </div>
 
     <%= render 'shared/error_messages', object: @event_comment %>
     <%= form_for @event_comment, {url: event_event_comments_path(@event.id)} do |f| %>
-        <%= content_tag 'div', class: 'field', id: 'comment-input', data: {url: User.order('users.username').all.collect { |u| "#{u.username} - #{u.name}" }} do %>
+        <%= content_tag 'div', class: 'field', id: 'comment-input', data: {url: User.order('users.username').load.collect { |u| "#{u.username} - #{u.name}" }} do %>
             <%= f.text_area :content, placeholder: 'Write new comment...', rows: 5, class: 'message' %>
         <% end %>
         <%= f.submit 'Comment', class: 'btn btn-primary' %>
@@ -83,7 +83,7 @@
                   Posted <%= time_ago_in_words c.created_at %> ago
                 </span>
                 <% if current_user?(c.user) %>
-                    <%= link_to 'delete', [@event, c], method: :delete, confirm: 'Are you sure?', title: c.content %>
+                    <%= link_to 'delete', [@event, c], method: :delete, data: {confirm: 'Are you sure?'}, title: c.content %>
                 <% end %>
               </li>
           <% end %>

@@ -1,7 +1,7 @@
 <li>
   <%= gravatar_for user, options = {size: 50, image_icon: 'monsterid'} %>
   <%= link_to user.name, user %> <span class="username">@<%= user.username %></span>
-  <% if current_user.admin? && !current_user?(user)%>
-     | <%= link_to "delete",  user, method: :delete, confirm: "Are you sure?"%>
+  <% if current_user.admin? && !current_user?(user) %>
+      | <%= link_to 'delete', user, method: :delete, data: {confirm: 'Are you sure?'} %>
   <% end %>
 </li>

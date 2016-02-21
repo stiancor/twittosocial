@@ -2,6 +2,7 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
     delete_users
+    delete_microposts
     make_users
     make_microposts
     make_relationships
@@ -12,6 +13,10 @@ def delete_users
   User.all.each do |a|
     a.delete
   end
+end
+
+def delete_microposts
+  Micropost.destroy_all
 end
 
 def make_users

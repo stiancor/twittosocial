@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include UsersHelper, MailHelper
 
-  before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
+  before_filter :signed_in_user, only: [:index, :show, :edit, :update, :destroy, :following, :followers]
   before_filter :signed_out_user, only: [:forgotten_password, :send_password_link, :show_reset_password, :reset_password]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
@@ -22,16 +22,13 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @codeword = Codeword.new
-    @domain_objects = [@user, @codeword]
   end
 
   def create
-    @user = User.new(params[:user])
-    @codeword = Codeword.new(params[:codeword])
-    @domain_objects = [@codeword, @user]
-    if !@codeword.valid? || non_existing_codeword?(@codeword)
-      render 'new'
-    elsif @user.save
+    @user = User.new(user_params)
+    @codeword = Codeword.new(codeword_param)
+    if @user.valid? & existing_codeword?(@codeword)
+      @user.save
       sign_in @user
       flash[:success] = 'Welcome to TwittoSocial!'
       redirect_to @user
@@ -44,7 +41,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       sign_in @user
       flash[:success] = 'User was updated'
       redirect_to @user
@@ -123,4 +120,15 @@ class UsersController < ApplicationController
   def admin_user
     redirect_to root_path unless current_user.admin?
   end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :username, :email, :password, :password_confirmation)
+  end
+
+  def codeword_param
+    params.require(:codeword).permit(:codeword)
+  end
+
 end

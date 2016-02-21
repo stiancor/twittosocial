@@ -1,6 +1,6 @@
 <%= form_for(@micropost) do |f| %>
     <%= render 'shared/error_messages', object: @micropost %>
-    <%= content_tag 'div', class: 'field', id: 'micropost-input', data: {url: User.order('users.username').all.collect { |u| "#{u.username} - #{u.name}" }} do %>
+    <%= content_tag 'div', class: 'field', id: 'micropost-input', data: {url: User.order('users.username').load.collect { |u| "#{u.username} - #{u.name}" }} do %>
         <%= f.text_area :content, placeholder: 'Compose new micropost...', rows: 7, class: 'message'%>
     <% end %>
     <% if current_user.admin? %>

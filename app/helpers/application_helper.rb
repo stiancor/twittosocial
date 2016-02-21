@@ -25,9 +25,8 @@ module ApplicationHelper
   private
 
   def fetch_event_summary
-    @event_summary = Event.includes(:event_invites)
-    .where('end_time > ? and event_invites.user_id = ?', DateTime.now, current_user.id)
-    .count(:group => 'attend_status')
+    @event_summary = Event.includes(:event_invites).references(:event_invites)
+    .where('end_time > ? and event_invites.user_id = ?', DateTime.now, current_user.id).group('attend_status').count
   end
 
   def total_upcoming_events
