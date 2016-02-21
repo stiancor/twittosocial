@@ -69,7 +69,5 @@ SampleApp::Application.configure do
   config.assets.js_compressor = :uglifier
 
   # Adding search server URL
-  Elasticsearch.configure do
-    url ENV['SEARCHBOX_URL']
-  end
+  Elasticsearch::Model.client = Elasticsearch::Client.new host: ENV['SEARCHBOX_URL']
 end
