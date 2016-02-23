@@ -298,7 +298,11 @@ span.countdown {
   top: 50%;
   width: 360px;
   margin: 0 0 0 -180px; //Centering modal
-
+  @media screen and (max-width: 768px) {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -200px;
+  }
 }
 
 .pagination ul li a {
@@ -337,14 +341,6 @@ div.space-bottom {
 
 div.large-space-bottom {
   padding-bottom: 50px;
-}
-
-div.modal {
-  @media screen and (max-width: 480px) {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: -200px;
-  }
 }
 
 ul {
