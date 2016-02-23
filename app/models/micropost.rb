@@ -4,8 +4,6 @@ class Micropost < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  Micropost.import
-
   belongs_to :user
   has_many :likes
   validates :user_id, presence: true
