@@ -281,6 +281,11 @@ span.message-username {
   color: #777777;
 }
 
+span.rank {
+  float: right;
+  margin-right: 10px;
+}
+
 span.written-as-admin {
   color: $grayLight;
   float: right;
@@ -387,6 +392,18 @@ textarea.message {
 
 ul {
   margin-left: 0;
+}
+
+.badge-gold {
+  background-color: #FFD700;
+}
+
+.badge-silver {
+  background-color: #C0C0C0;
+}
+
+.badge-bronze {
+  background-color: #CD7F32;
 }
 
 

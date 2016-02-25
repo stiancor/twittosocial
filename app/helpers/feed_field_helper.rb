@@ -80,4 +80,19 @@ module FeedFieldHelper
     content.gsub!('>', '&gt;')
     content
   end
+
+  def rank_color_class(position)
+    if position == 1
+      'badge-gold'
+    elsif position == 2
+      'badge-silver'
+    elsif position == 3
+      'badge-bronze'
+    elsif position <= 5
+      'badge-info'
+    else
+      'badge-important'
+    end
+  end
+
 end
