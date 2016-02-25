@@ -2,6 +2,8 @@ class StaticPagesController < ApplicationController
   def home
     if signed_in?
       @micropost = current_user.microposts.build
+      rank = User.select('users.*, count(microposts.id) micropost_count').joins(:microposts).where('microposts.created_at > ?', Date.today.advance(days: -30)).group('users.id').order('micropost_count desc').all
+      @user_rank = create_rank_map rank
       if params[:q].present?
         @feed_items = Micropost.search(params[:q]).records.paginate(page: params[:page], per_page: 30)
       else
@@ -55,6 +57,12 @@ class StaticPagesController < ApplicationController
         one_year_set = true
       end
     end
+  end
+
+  def create_rank_map(rank)
+    map = Hash.new
+    rank.each_with_index { |user, i| map[user.id] = i }
+    map
   end
 
 end
