@@ -61,7 +61,7 @@ class StaticPagesController < ApplicationController
 
   def create_rank_map(rank)
     map = Hash.new
-    rank.each_with_index { |user, i| map[user.id] = i }
+    rank.each_with_index { |user, i| map[user.id] = i + 1 }
     map
   end
 
