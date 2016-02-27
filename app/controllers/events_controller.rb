@@ -7,14 +7,14 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.includes(:event_invites).references(:event_invites)
-    .where('end_time > ? and event_invites.user_id = ?', DateTime.now, current_user.id)
-    .paginate(page: params[:page]).order('start_time')
+                  .where('end_time > ? and event_invites.user_id = ?', DateTime.now, current_user.id)
+                  .paginate(page: params[:page]).order('start_time')
   end
 
   def old
     @events = Event.includes(:event_invites).references(:event_invites)
-    .where('end_time < ? and event_invites.user_id = ?', DateTime.now, current_user.id)
-    .paginate(page: params[:page], per_page: 10).order('start_time desc')
+                  .where('end_time < ? and event_invites.user_id = ?', DateTime.now, current_user.id)
+                  .paginate(page: params[:page], per_page: 10).order('start_time desc')
   end
 
   def show
@@ -60,8 +60,11 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    Event.find(params[:id]).destroy
-    flash[:success] = 'Event deleted'
+    if Event.find(params[:id]).user_id == current_user.id
+      EventComment.where('event_id = ?', params[:id]).delete_all
+      Event.find(params[:id]).delete
+      flash[:success] = 'Event deleted'
+    end
     redirect_to events_path
   end
 
