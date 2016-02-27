@@ -51,7 +51,6 @@ class EventsController < ApplicationController
 
   def update
     if @event.update_attributes(event_params)
-      @event.event_invites.create(user_id: current_user.id, attend_status: 'yes')
       if @event.send_mail
         send_email_to_all_invites(@event)
       end
