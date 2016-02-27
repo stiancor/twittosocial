@@ -23,7 +23,6 @@ class EventsController < ApplicationController
   end
 
   def new
-    get_users
     @event = Event.new
   end
 
@@ -38,7 +37,6 @@ class EventsController < ApplicationController
       flash[:success] = 'Event created!'
       redirect_to events_path
     else
-      get_users
       @feed_items = []
       @usernames = User.all.collect { |user| user.username.to_s }.sort
       render 'new'
@@ -46,7 +44,6 @@ class EventsController < ApplicationController
   end
 
   def edit
-    get_users
   end
 
   def update
@@ -81,10 +78,6 @@ class EventsController < ApplicationController
   end
 
   private
-
-  def get_users
-    @users = User.where('id != ?', current_user.id).order('name').select('id, name')
-  end
 
   def user_is_invited
     if Event.includes(:event_invites).references(:event_invites).where('events.id = ? and event_invites.user_id = ?', params[:id], current_user.id).length == 0
