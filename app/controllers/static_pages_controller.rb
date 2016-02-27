@@ -2,8 +2,8 @@ class StaticPagesController < ApplicationController
   def home
     if signed_in?
       @micropost = current_user.microposts.build
-      micropost_rank = User.select('users.*, count(microposts.id) micropost_count').joins(:microposts).where('microposts.created_at > ?', Date.today.advance(days: -30)).group('users.id').order('micropost_count desc').all
-      event_rank = User.select('users.*', 'count(events.id) event_count').joins(:events).where('events.start_time between ? and ?', Date.today.advance(days: -30), Date.today.advance(days: 14)).group('users.id').order('event_count desc').all
+      micropost_rank = User.select('users.*, count(microposts.id) micropost_count').joins(:microposts).where('microposts.created_at > ?', Date.today.advance(days: -30)).group('users.id').order('micropost_count desc').to_a
+      event_rank = User.select('users.*', 'count(events.id) event_count').joins(:events).where('events.start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30)).group('users.id').order('event_count desc').to_a
       @user_rank = create_rank_map(micropost_rank, event_rank)
       if params[:q].present?
         @feed_items = Micropost.search(params[:q]).records.paginate(page: params[:page], per_page: 30)
@@ -63,9 +63,9 @@ class StaticPagesController < ApplicationController
   def create_rank_map(micropost_rank, event_rank)
     map = Hash.new
     micropost_rank.each { |rank| map[rank.id] = rank.micropost_count * 3 }
-    event_rank.each { |rank| map[rank.id] = map[rank.id].to_i + rank.event_count * 20 }
+    event_rank.each { |rank| map[rank.id] = map[rank.id].to_i + rank.event_count * 50 }
     sorted_on_rank = Hash[map.sort_by{|k,v| v}].collect {|k,v| k}.reverse
-    Hash[ sorted_on_rank.collect.with_index { |x,i| [x, i + 1] } ]
+    Hash[sorted_on_rank.collect.with_index { |x,i| [x, i + 1] } ]
   end
 
 end
