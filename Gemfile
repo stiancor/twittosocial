@@ -24,6 +24,7 @@ group :development, :test do
   gem 'sqlite3', '1.3.11'
   gem 'rspec-rails', '3.4.2'
   gem 'test-unit'
+  gem 'quiet_assets'
 end
 
 group :test do
