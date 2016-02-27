@@ -1,1 +1,1 @@
-(<%= event_invites.count { |ei| ei.attend_status == 'yes' || ei.attend_status == 'maybe' } %>/<%= event_invites.count %> <i class="icon-info-sign"></i>)
+(<%= event_invites.find_all { |ei| ei.attend_status == 'yes' || ei.attend_status == 'maybe' }.count %>/<%= event_invites.count %> <i class="icon-info-sign"></i>)

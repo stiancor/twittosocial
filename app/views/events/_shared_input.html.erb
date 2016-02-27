@@ -36,12 +36,8 @@
 
             <div><input type="checkbox" class="checkall"> <strong>Check all</strong></div>
 
-            <%= hidden_field_tag 'event[user_ids][]', nil %>
-            <% @users.each do |user| %>
-                <br/>
-                <%= check_box_tag 'event[user_ids][]', user.id, @event.user_ids.include?(user.id), id: dom_id(user) %>
-                <%= label_tag dom_id(user), user.name, class: 'label-inline' %>
-            <% end %>
+            <%= f.collection_check_boxes :user_ids, User.where('id != ?', current_user.id).to_a, :id, :name do |b| b.label('data-value': b.value) { b.check_box + ' ' + b.text } end%>
+
 
           </div>
 
