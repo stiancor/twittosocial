@@ -16,12 +16,15 @@
         <% end %>
       </div>
 
-      <% if @event.location %>
-          <p><%= @event.location.blank? ? 'Not specified yet' : @event.location %><i class="icon-map-marker"></i></p>
+      <% if @event.location.blank? %>
+          <p>Not specified yet <i class="icon-map-marker"></i></p>
+      <% else %>
+          <%= link_to @event.location, "http://maps.google.com/?q=#{@event.location}" %>
+          <i class="icon-map-marker"></i>
       <% end %>
-      <p>
-        <span class="event-label">Start: </span> <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%A %d. %B %Y - %H:%M') %>
-        <i class="icon-calendar"></i></p>
+
+      <span class="event-label">Start: </span> <%= @event.start_time.blank? ? '' : @event.start_time.strftime('%A %d. %B %Y - %H:%M') %>
+      <i class="icon-calendar"></i></p>
 
       <p>
         <span class="event-label">End: </span><%= @event.end_time.blank? ? '' : @event.end_time.strftime('%A %d. %B %Y - %H:%M') %>
@@ -41,9 +44,10 @@
               <%= f.submit 'Decline', class: 'submitLink' %> -
               <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'events/attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status} %> </div>
           <% end %></li>
-        <% @event.event_invites.sort{|a,b| a.user.name.upcase <=> b.user.name.upcase}.each do |i| %>
+        <% @event.event_invites.sort { |a, b| a.user.name.upcase <=> b.user.name.upcase }.each do |i| %>
             <% unless current_user?(i.user) %>
-                <li><%= i.user.name %> <span class="username">(@<%= i.user.username %>)<span> - <%= render partial: 'events/attend_status', locals: {status: i.attend_status} %></li>
+                <li><%= i.user.name %><span class="username">(@<%= i.user.username %>
+                  )<span> - <%= render partial: 'events/attend_status', locals: {status: i.attend_status} %></li>
             <% end %>
         <% end %>
       </ul>
@@ -56,7 +60,7 @@
           <%= link_to 'edit', [:edit, @event] %> |
       <% end %>
       <% if current_user.admin? || current_user?(@event.user) %>
-          <%= link_to 'delete', @event, method: :delete, data: { confirm: 'Are you sure?' }%>
+          <%= link_to 'delete', @event, method: :delete, data: {confirm: 'Are you sure?'} %>
       <% end %>
     </div>
 
@@ -76,7 +80,7 @@
                 <%= link_to gravatar_for(c.user), c.user %>
                 <span class="user">
                     <%= link_to c.user.name, c.user %>
-                    <span class="username">@<%= c.user.username %></span>
+                  <span class="username">@<%= c.user.username %></span>
                 </span>
                 <span class="content"><%= format_msg(c.content).html_safe %></span>
                 <span class="timestamp">
