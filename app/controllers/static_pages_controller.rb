@@ -2,9 +2,9 @@ class StaticPagesController < ApplicationController
   def home
     if signed_in?
       @micropost = current_user.microposts.build
-      micropost_rank = Micropost.select('user_id, count(id) micropost_count').where('created_at > ?', Date.today.advance(days: -30)).group('id').order('micropost_count desc').to_a
-      event_rank = Event.select('user_id', 'count(events.id) event_count').where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30)).group('user_id').order('event_count desc').to_a
-      event_comment_rank = EventComment.select('user_id', 'count(event_comments.id) event_comment_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').order('event_comment_count desc').to_a
+      micropost_rank = Micropost.select('user_id, count(id) micropost_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').order('micropost_count desc').to_a
+      event_rank = Event.select('user_id, count(id) event_count').where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30)).group('user_id').order('event_count desc').to_a
+      event_comment_rank = EventComment.select('user_id, count(id) event_comment_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').reorder('event_comment_count desc').to_a
       @user_rank = create_rank_map(micropost_rank, event_rank, event_comment_rank)
       if params[:q].present?
         @feed_items = Micropost.search(params[:q]).records.paginate(page: params[:page], per_page: 30)
