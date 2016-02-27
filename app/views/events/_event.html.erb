@@ -7,7 +7,7 @@
   <div class="event-date"><%= event.start_time.blank? ? '' : event.start_time.strftime('%d %B %Y - %H:%M') %>
     <i class="icon-calendar"></i></div>
   <% unless event.location.blank? %>
-      <div class="event-location"><%= event.location %> <i class="icon-map-marker"></i></div>
+      <div class="event-location"><%=link_to event.location, "http://maps.google.com/?q=#{event.location}" %> <i class="icon-map-marker"></i></div>
   <% end %>
   <% if current_user?(event.user) %>
       <div class="event-organizer"><%= link_to 'You', event.user %>
