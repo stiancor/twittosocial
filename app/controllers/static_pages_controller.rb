@@ -2,9 +2,10 @@ class StaticPagesController < ApplicationController
   def home
     if signed_in?
       @micropost = current_user.microposts.build
-      micropost_rank = User.select('users.*, count(microposts.id) micropost_count').joins(:microposts).where('microposts.created_at > ?', Date.today.advance(days: -30)).group('users.id').order('micropost_count desc').to_a
+      micropost_rank = Micropost.select('user_id, count(id) micropost_count').where('created_at > ?', Date.today.advance(days: -30)).group('id').order('micropost_count desc').to_a
       event_rank = Event.select('user_id', 'count(events.id) event_count').where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30)).group('user_id').order('event_count desc').to_a
-      @user_rank = create_rank_map(micropost_rank, event_rank)
+      event_comment_rank = EventComment.select('user_id', 'count(event_comments.id) event_comment_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').order('event_comment_count desc').to_a
+      @user_rank = create_rank_map(micropost_rank, event_rank, event_comment_rank)
       if params[:q].present?
         @feed_items = Micropost.search(params[:q]).records.paginate(page: params[:page], per_page: 30)
       else
@@ -60,10 +61,11 @@ class StaticPagesController < ApplicationController
     end
   end
 
-  def create_rank_map(micropost_rank, event_rank)
+  def create_rank_map(micropost_rank, event_rank, event_comment_rank)
     map = Hash.new
-    micropost_rank.each { |rank| map[rank.id] = rank.micropost_count * 3 }
-    event_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + rank.event_count * 15 }
+    micropost_rank.each { |rank| map[rank.user_id] = rank.micropost_count * 4 }
+    event_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + rank.event_count * 20 }
+    event_comment_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + rank.event_comment_count * 3 }
     sorted_on_rank = Hash[map.sort_by{|k,v| v}].collect {|k,v| k}.reverse
     Hash[sorted_on_rank.collect.with_index { |x,i| [x, i + 1] } ]
   end
