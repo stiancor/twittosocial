@@ -82,19 +82,7 @@ module FeedFieldHelper
   end
 
   def rank_color_class(position)
-    case position
-      when 1 then 'first-place'
-      when 2 then 'second-place'
-      when 3 then 'third-place'
-      when 4 then 'fourth-place'
-      when 5 then 'fifth-place'
-      when 6 then 'sixth-place'
-      when 7 then 'seventh-place'
-      when 8 then 'eight-place'
-      when 9 then 'ninth-place'
-      when 10 then 'tenth-place'
-      else ''
-    end
+    "place-#{position}"
   end
 
 end
