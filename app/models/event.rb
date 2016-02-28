@@ -4,8 +4,6 @@ class Event < ActiveRecord::Base
   has_many :event_comments
   belongs_to :user
 
-  #attr_accessible :title, :location, :start_time, :end_time, :invitation, :send_mail, :invite_all, :user_id, :user_ids
-
   validates :title, presence: true, length: {maximum: 250}
   validates_presence_of :start_time, :end_time
   validates :invitation, presence: true, length: {maximum: 3000}
