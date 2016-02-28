@@ -42,12 +42,12 @@
               <%= f.submit 'Maybe', class: 'submitLink' %>
               -
               <%= f.submit 'Decline', class: 'submitLink' %> -
-              <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'events/attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status} %> </div>
+              <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status} %> </div>
           <% end %></li>
         <% @event.event_invites.sort { |a, b| a.user.name.upcase <=> b.user.name.upcase }.each do |i| %>
             <% unless current_user?(i.user) %>
                 <li><%= i.user.name %><span class="username">(@<%= i.user.username %>
-                  )<span> - <%= render partial: 'events/attend_status', locals: {status: i.attend_status} %></li>
+                  )<span> - <%= render partial: 'attend_status', locals: {status: i.attend_status} %></li>
             <% end %>
         <% end %>
       </ul>

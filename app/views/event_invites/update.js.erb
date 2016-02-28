@@ -1,6 +1,6 @@
 $("#event-reply-status-<%= @event_invite.event_id %>").html("<%= escape_javascript(render partial: 'events/attend_status',
 locals: {status: @event_invite.attend_status})%>")
 $('.event-header').html("<%= escape_javascript(render partial: 'layouts/event_header')%>")
-$('.event-header-mobile').html("<%= escape_javascript(render partial: 'layouts/event_header_mobile')%>")
-$("#event-attend-overview-<%= @event_invite.event_id %>").html("<%= escape_javascript(render partial: 'events/attend_overview',
+$('.event-header-mobile').html("<%= escape_javascript(render partial: 'layouts/event_header_mobile')%>");
+$("#event-attend-overview-<%= @event_invite.event_id %>").html("<%= escape_javascript(render partial: 'attend_overview',
 locals: {event_invites: @event_invite.event.event_invites})%>")

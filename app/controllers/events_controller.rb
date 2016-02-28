@@ -6,13 +6,13 @@ class EventsController < ApplicationController
   before_filter :user_can_update, only: [:edit, :update, :destroy]
 
   def index
-    @events = Event.includes(:event_invites).references(:event_invites)
+    @events = Event.joins(:event_invites)
                   .where('end_time > ? and event_invites.user_id = ?', DateTime.now, current_user.id)
                   .paginate(page: params[:page]).order('start_time')
   end
 
   def old
-    @events = Event.includes(:event_invites).references(:event_invites)
+    @events = Event.joins(:event_invites)
                   .where('end_time < ? and event_invites.user_id = ?', DateTime.now, current_user.id)
                   .paginate(page: params[:page], per_page: 10).order('start_time desc')
   end
