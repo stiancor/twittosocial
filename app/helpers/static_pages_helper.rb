@@ -55,6 +55,7 @@ module StaticPagesHelper
       map[rank.like_user_id] = map[rank.like_user_id].to_i + 1
     end
     sorted_on_rank = Hash[map.sort_by{|k,v| v}].collect {|k,v| k}.reverse
+    logger.info("Current rank: #{map}")
     Hash[sorted_on_rank.collect.with_index { |x,i| [x, i + 1] } ]
   end
 end
