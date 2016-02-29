@@ -239,6 +239,7 @@ input, textarea, select, .uneditable-input {
 
 .content {
   display: block;
+  word-wrap: break-word;
 }
 
 .timestamp {
