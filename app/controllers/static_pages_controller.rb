@@ -1,12 +1,10 @@
 class StaticPagesController < ApplicationController
+  include StaticPagesHelper
+
   def home
     if signed_in?
       @micropost = current_user.microposts.build
-      micropost_rank = Micropost.unscoped.select('user_id, count(id) micropost_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').to_a
-      event_rank = Event.select('user_id, count(id) event_count').where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30)).group('user_id').to_a
-      event_comment_rank = EventComment.unscoped.select('user_id, count(id) event_comment_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').to_a
-      like_rank = Micropost.unscoped.select('microposts.user_id micropost_user_id, likes.user_id like_user_id').joins(:likes).where('microposts.created_at > ?', Date.today.advance(days: -30)).to_a
-      @user_rank = create_rank_map(micropost_rank, event_rank, event_comment_rank, like_rank)
+      @user_rank = calculate_user_rank
       if params[:q].present?
         @feed_items = Micropost.search(params[:q]).records.paginate(page: params[:page], per_page: 30)
       else
