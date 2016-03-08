@@ -62,6 +62,7 @@ class EventsController < ApplicationController
   def destroy
     if Event.find(params[:id]).user_id == current_user.id
       EventComment.where('event_id = ?', params[:id]).delete_all
+      EventInvite.where('event_id = ?', params[:id]).delete_all
       Event.find(params[:id]).delete
       flash[:success] = 'Event deleted'
     end
