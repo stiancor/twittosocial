@@ -19,6 +19,7 @@ gem 'coffee-rails', '4.0.1'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'jbuilder'
+gem 'lograge'
 
 group :development, :test do
   gem 'sqlite3', '1.3.11'

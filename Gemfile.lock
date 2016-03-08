@@ -102,9 +102,13 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
+    lograge (0.3.6)
+      actionpack (>= 3)
+      activesupport (>= 3)
+      railties (>= 3)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    mime-types (2.99)
+    mime-types (2.99.1)
     mini_portile2 (2.0.0)
     minitest (4.7.5)
     multi_json (1.11.2)
@@ -141,7 +145,7 @@ GEM
     rake (10.5.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rspec-core (3.4.2)
+    rspec-core (3.4.3)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -207,6 +211,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails (= 3.0.1)
   jquery-turbolinks
+  lograge
   newrelic_rpm
   pg (= 0.15.1)
   quiet_assets
