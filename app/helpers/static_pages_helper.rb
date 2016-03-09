@@ -50,7 +50,7 @@ module StaticPagesHelper
   private
 
   def create_rank_map(micropost_rank, event_rank, event_comment_rank, like_rank, attending_rank)
-    map = Hash.new
+    map = Hash.new(0)
     apply_micropost_score(map, micropost_rank)
     event_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + 25 }
     apply_event_comment_score(event_comment_rank, map)
