@@ -2,7 +2,9 @@ module StaticPagesHelper
 
   def calculate_user_rank
     micropost_rank = Micropost.unscoped.select('user_id').where('created_at > ?', Date.today.advance(days: -30)).to_a
-    event_rank = Event.select('user_id, count(id) event_count').where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30)).group('user_id').to_a
+    event_rank = Event.joins(:event_invites).select('events.id, events.user_id')
+                     .where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30))
+                     .group('events.id, events.user_id').having('count(event_invites.id) > ?', 1).to_a
     event_comment_rank = EventComment.unscoped.select('event_id, user_id').where('created_at > ?', Date.today.advance(days: -30)).order('event_id').to_a
     like_rank = Micropost.unscoped.select('microposts.user_id micropost_user_id, likes.user_id like_user_id').joins(:likes).where('microposts.created_at > ? and microposts.user_id != likes.user_id', Date.today.advance(days: -30)).to_a
     create_rank_map(micropost_rank, event_rank, event_comment_rank, like_rank)
@@ -48,7 +50,7 @@ module StaticPagesHelper
   def create_rank_map(micropost_rank, event_rank, event_comment_rank, like_rank)
     map = Hash.new
     micropost_score(map, micropost_rank)
-    event_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + rank.event_count * 35 }
+    event_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + 35 }
     event_comment_score(event_comment_rank, map)
     like_rank.each  do |rank|
       map[rank.micropost_user_id] = map[rank.micropost_user_id].to_i + 1
