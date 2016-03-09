@@ -3,7 +3,7 @@ module StaticPagesHelper
   def calculate_user_rank
     micropost_rank = Micropost.unscoped.select('user_id').where('created_at > ?', Date.today.advance(days: -30)).to_a
     event_rank = Event.select('user_id, count(id) event_count').where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30)).group('user_id').to_a
-    event_comment_rank = EventComment.unscoped.select('user_id, count(id) event_comment_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').to_a
+    event_comment_rank = EventComment.unscoped.select('event_id, user_id').where('created_at > ?', Date.today.advance(days: -30)).order('event_id').to_a
     like_rank = Micropost.unscoped.select('microposts.user_id micropost_user_id, likes.user_id like_user_id').joins(:likes).where('microposts.created_at > ? and microposts.user_id != likes.user_id', Date.today.advance(days: -30)).to_a
     create_rank_map(micropost_rank, event_rank, event_comment_rank, like_rank)
   end
@@ -49,7 +49,7 @@ module StaticPagesHelper
     map = Hash.new
     micropost_score(map, micropost_rank)
     event_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + rank.event_count * 35 }
-    event_comment_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + rank.event_comment_count * 4 }
+    event_comment_score(event_comment_rank, map)
     like_rank.each  do |rank|
       map[rank.micropost_user_id] = map[rank.micropost_user_id].to_i + 1
       map[rank.like_user_id] = map[rank.like_user_id].to_i + 1
@@ -70,4 +70,19 @@ module StaticPagesHelper
       previous_user_id = rank.user_id
     end
   end
+
+  def event_comment_score(event_comment_rank, map)
+    previous_user_id = nil
+    previous_event_id = nil
+    adjacent_msg_by_user = 1
+    event_comment_rank.each do |rank|
+      previous_user_id == rank.user_id && previous_event_id == rank.event_id ? adjacent_msg_by_user += 1 : adjacent_msg_by_user = 1
+      if adjacent_msg_by_user < 3
+        map[rank.user_id] = map[rank.user_id].to_i + 4
+      end
+      previous_user_id = rank.user_id
+      previous_event_id = rank.event_id
+    end
+  end
+
 end
