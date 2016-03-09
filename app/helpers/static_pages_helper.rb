@@ -1,7 +1,7 @@
 module StaticPagesHelper
 
   def calculate_user_rank
-    micropost_rank = Micropost.unscoped.select('user_id, count(id) micropost_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').to_a
+    micropost_rank = Micropost.unscoped.select('user_id').where('created_at > ?', Date.today.advance(days: -30)).to_a
     event_rank = Event.select('user_id, count(id) event_count').where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30)).group('user_id').to_a
     event_comment_rank = EventComment.unscoped.select('user_id, count(id) event_comment_count').where('created_at > ?', Date.today.advance(days: -30)).group('user_id').to_a
     like_rank = Micropost.unscoped.select('microposts.user_id micropost_user_id, likes.user_id like_user_id').joins(:likes).where('microposts.created_at > ? and microposts.user_id != likes.user_id', Date.today.advance(days: -30)).to_a
@@ -47,7 +47,7 @@ module StaticPagesHelper
 
   def create_rank_map(micropost_rank, event_rank, event_comment_rank, like_rank)
     map = Hash.new
-    micropost_rank.each { |rank| map[rank.user_id] = rank.micropost_count * 6 }
+    micropost_score(map, micropost_rank)
     event_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + rank.event_count * 35 }
     event_comment_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + rank.event_comment_count * 4 }
     like_rank.each  do |rank|
@@ -57,5 +57,17 @@ module StaticPagesHelper
     sorted_on_rank = Hash[map.sort_by{|k,v| v}].collect {|k,v| k}.reverse
     logger.info("Current rank: #{map}")
     Hash[sorted_on_rank.collect.with_index { |x,i| [x, i + 1] } ]
+  end
+
+  def micropost_score(map, micropost_rank)
+    previous_user_id = nil
+    adjacent_msg_by_user = 1
+    micropost_rank.each do |rank|
+      previous_user_id == rank.user_id ? adjacent_msg_by_user += 1 : adjacent_msg_by_user = 1
+      if adjacent_msg_by_user < 3
+        map[rank.user_id] = map[rank.user_id].to_i + 6
+      end
+      previous_user_id = rank.user_id
+    end
   end
 end
