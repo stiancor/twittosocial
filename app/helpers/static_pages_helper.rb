@@ -1,7 +1,7 @@
 module StaticPagesHelper
 
   def calculate_user_rank
-    micropost_rank = Micropost.unscoped.select('user_id').where('created_at > ?', Date.today.advance(days: -30)).to_a
+    micropost_rank = Micropost.unscoped.select('user_id').where('created_at > ?', Date.today.advance(days: -30)).order('created_at').to_a
     event_rank = Event.joins(:event_invites).select('events.id, events.user_id')
                      .where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30))
                      .group('events.id, events.user_id').having('count(event_invites.id) > ?', 1).to_a
@@ -70,7 +70,7 @@ module StaticPagesHelper
     micropost_rank.each do |rank|
       previous_user_id == rank.user_id ? adjacent_msg_by_user += 1 : adjacent_msg_by_user = 1
       if adjacent_msg_by_user < 3
-        map[rank.user_id] = map[rank.user_id].to_i + 6
+        map[rank.user_id] = map[rank.user_id] + 6
       end
       previous_user_id = rank.user_id
     end
@@ -79,11 +79,11 @@ module StaticPagesHelper
   def apply_event_comment_score(event_comment_rank, map)
     previous_user_id = nil
     previous_event_id = nil
-    adjacent_msg_by_user = 1
+    adjacent_msg_by_user = 0
     event_comment_rank.each do |rank|
       previous_user_id == rank.user_id && previous_event_id == rank.event_id ? adjacent_msg_by_user += 1 : adjacent_msg_by_user = 1
       if adjacent_msg_by_user < 3
-        map[rank.user_id] = map[rank.user_id].to_i + 4
+        map[rank.user_id] = map[rank.user_id] + 4
       end
       previous_user_id = rank.user_id
       previous_event_id = rank.event_id
