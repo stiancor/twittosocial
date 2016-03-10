@@ -5,7 +5,7 @@ module StaticPagesHelper
     event_rank = Event.joins(:event_invites).select('events.id, events.user_id')
                      .where('start_time between ? and ?', Date.today.advance(days: -14), Date.today.advance(days: 30))
                      .group('events.id, events.user_id').having('count(event_invites.id) > ?', 1).to_a
-    event_comment_rank = EventComment.unscoped.select('event_id, user_id').where('created_at > ?', Date.today.advance(days: -30)).order('event_id').to_a
+    event_comment_rank = EventComment.unscoped.select('event_id, user_id').where('created_at > ?', Date.today.advance(days: -30)).order('event_id, created_at').to_a
     like_rank = Micropost.unscoped.select('microposts.user_id micropost_user_id, likes.user_id like_user_id').joins(:likes).where('microposts.created_at > ? and microposts.user_id != likes.user_id', Date.today.advance(days: -30)).to_a
     attending_rank = Event.joins(:event_invites).select('events.id events_id, events.user_id event_user_id, event_invites.user_id event_invite_user_id, event_invites.id ei_id')
                          .where('start_time between ? and ? and attend_status = ? and events.updated_at < start_time', Date.today.advance(days: -14), Date.today.advance(days: 30), 'yes').to_a
@@ -52,11 +52,11 @@ module StaticPagesHelper
   def create_rank_map(micropost_rank, event_rank, event_comment_rank, like_rank, attending_rank)
     map = Hash.new(0)
     apply_micropost_score(map, micropost_rank)
-    event_rank.each { |rank| map[rank.user_id] = map[rank.user_id].to_i + 25 }
+    event_rank.each { |rank| map[rank.user_id] = map[rank.user_id] + 25 }
     apply_event_comment_score(event_comment_rank, map)
     like_rank.each do |rank|
-      map[rank.micropost_user_id] = map[rank.micropost_user_id].to_i + 1
-      map[rank.like_user_id] = map[rank.like_user_id].to_i + 1
+      map[rank.micropost_user_id] = map[rank.micropost_user_id] + 1
+      map[rank.like_user_id] = map[rank.like_user_id] + 1
     end
     apply_attend_score(attending_rank, map)
     sorted_on_rank = Hash[map.sort_by{|k,v| v}].collect {|k,v| k}.reverse
@@ -79,7 +79,7 @@ module StaticPagesHelper
   def apply_event_comment_score(event_comment_rank, map)
     previous_user_id = nil
     previous_event_id = nil
-    adjacent_msg_by_user = 0
+    adjacent_msg_by_user = 1
     event_comment_rank.each do |rank|
       previous_user_id == rank.user_id && previous_event_id == rank.event_id ? adjacent_msg_by_user += 1 : adjacent_msg_by_user = 1
       if adjacent_msg_by_user < 3
