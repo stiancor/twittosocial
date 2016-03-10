@@ -52,16 +52,24 @@ module StaticPagesHelper
   def create_rank_map(micropost_rank, event_rank, event_comment_rank, like_rank, attending_rank)
     map = Hash.new(0)
     apply_micropost_score(map, micropost_rank)
-    event_rank.each { |rank| map[rank.user_id] = map[rank.user_id] + 25 }
+    apply_event_score(event_rank, map)
     apply_event_comment_score(event_comment_rank, map)
-    like_rank.each do |rank|
-      map[rank.micropost_user_id] = map[rank.micropost_user_id] + 1
-      map[rank.like_user_id] = map[rank.like_user_id] + 1
-    end
+    apply_like_score(like_rank, map)
     apply_attend_score(attending_rank, map)
     sorted_on_rank = Hash[map.sort_by{|k,v| v}].collect {|k,v| k}.reverse
     logger.info("Current rank: #{map}")
     Hash[sorted_on_rank.collect.with_index { |x,i| [x, i + 1] } ]
+  end
+
+  def apply_event_score(event_rank, map)
+    event_rank.each { |rank| map[rank.user_id] += 25 }
+  end
+
+  def apply_like_score(like_rank, map)
+    like_rank.each do |rank|
+      map[rank.micropost_user_id] += 1
+      map[rank.like_user_id] += 1
+    end
   end
 
   def apply_micropost_score(map, micropost_rank)
@@ -70,7 +78,7 @@ module StaticPagesHelper
     micropost_rank.each do |rank|
       previous_user_id == rank.user_id ? adjacent_msg_by_user += 1 : adjacent_msg_by_user = 1
       if adjacent_msg_by_user < 3
-        map[rank.user_id] = map[rank.user_id] + 6
+        map[rank.user_id] +=  6
       end
       previous_user_id = rank.user_id
     end
@@ -83,7 +91,7 @@ module StaticPagesHelper
     event_comment_rank.each do |rank|
       previous_user_id == rank.user_id && previous_event_id == rank.event_id ? adjacent_msg_by_user += 1 : adjacent_msg_by_user = 1
       if adjacent_msg_by_user < 3
-        map[rank.user_id] = map[rank.user_id] + 4
+        map[rank.user_id] += 4
       end
       previous_user_id = rank.user_id
       previous_event_id = rank.event_id
