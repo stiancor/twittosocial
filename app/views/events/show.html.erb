@@ -9,10 +9,12 @@
         <%= link_to gravatar_for(@event.user, options = {size: 50, image_icon: 'monsterid'}), @event.user %>
         <% if current_user?(@event.user) %>
             <div class="event-organizer"><%= link_to 'You', @event.user %>
-              <span class="username"> are organizer </span></div>
+              <span class="username"> are organizer </span>
+              <% if @user_rank[@event.user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[@event.user.id]) %>" title="Rank based on activity the latest month"></div><% end %></div>
         <% else %>
             <div class="event-organizer"><%= link_to @event.user.name, @event.user %>
-              <span class="username"> invited you </span></div>
+              <span class="username"> invited you </span>
+              <% if @user_rank[@event.user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[@event.user.id]) %>" title="Rank based on activity the latest month"></div><% end %></div>
         <% end %>
       </div>
 
@@ -81,6 +83,7 @@
                 <span class="user">
                     <%= link_to c.user.name, c.user %>
                   <span class="username">@<%= c.user.username %></span>
+                  <% if @user_rank[c.user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[c.user.id]) %>" title="Rank based on activity the latest month"></div><% end %>
                 </span>
                 <span class="content"><%= format_msg(c.content).html_safe %></span>
                 <span class="timestamp">

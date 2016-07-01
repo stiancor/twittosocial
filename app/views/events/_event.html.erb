@@ -11,7 +11,8 @@
   <% end %>
   <% if current_user?(event.user) %>
       <div class="event-organizer"><%= link_to 'You', event.user %>
-        <span class="username"> are organizer </span></div>
+        <span class="username"> are organizer </span>
+        <% if @user_rank[event.user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[event.user.id]) %>" title="Rank based on activity the latest month"></div><% end %></div>
   <% else %>
       <div class="event-organizer"><%= link_to event.user.name, event.user %>
         <span class="username"> invited you </span></div>

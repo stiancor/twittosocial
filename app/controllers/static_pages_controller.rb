@@ -10,7 +10,7 @@ class StaticPagesController < ApplicationController
       else
         @feed_items = current_user.feed.paginate(page: params[:page])
       end
-      post_process_feed
+      categorize_feed_on_age
     end
   end
 

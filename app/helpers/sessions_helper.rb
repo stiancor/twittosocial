@@ -1,4 +1,5 @@
 module SessionsHelper
+  include ApplicationHelper
 
   def sign_in(user)
     cookies.permanent[:remember_token] = user.remember_token
@@ -46,6 +47,7 @@ module SessionsHelper
       store_location
       redirect_to signin_path, notice: 'Please sign in.'
     end
+    @user_rank = calculate_user_rank
   end
 end
 

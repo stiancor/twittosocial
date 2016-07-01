@@ -7,6 +7,7 @@
         <%= @user.name %>
       </h1>
       <% if !@user.username.nil? %><span class="username">@<%=@user.username %></span><% end %>
+      <% if @user_rank[@user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[@user.id]) %>" title="Rank based on activity the latest month"></div><% end %>
     </section>
     <section>
       <%= render 'shared/stats' %>

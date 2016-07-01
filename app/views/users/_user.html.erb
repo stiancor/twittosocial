@@ -1,6 +1,7 @@
 <li>
   <%= gravatar_for user, options = {size: 50, image_icon: 'monsterid'} %>
   <%= link_to user.name, user %> <span class="username">@<%= user.username %></span>
+  <% if @user_rank[user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[user.id]) %>" title="Rank based on activity the latest month"></div><% end %>
   <% if current_user.admin? && !current_user?(user) %>
       | <%= link_to 'delete', user, method: :delete, data: {confirm: 'Are you sure?'} %>
   <% end %>
