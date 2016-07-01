@@ -2,5 +2,6 @@
     <%= gravatar_for current_user, {size: 52, image_icon: 'monsterid'} %>
 </a>
 <h1><%= current_user.name %></h1>
+<% if @user_rank[current_user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[current_user.id]) %>" title="Rank bast on your activity the month"></div><% end %>
 <span><%= link_to "view my profile", current_user %></span>
 <span><%= pluralize(current_user.microposts.count, "micropost") %></span>
