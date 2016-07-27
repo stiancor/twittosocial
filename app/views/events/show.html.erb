@@ -53,7 +53,7 @@
             <%= f.text_area :content, placeholder: 'Write new comment...', rows: 5, class: 'message' %>
         <% end %>
         <%= f.submit 'Comment', class: 'btn btn-primary' %>
-        <span class="comment-countdown"></span>
+        <span class="countdown"></span>
     <% end %>
 
     <% unless @event.event_comments.empty? %>
