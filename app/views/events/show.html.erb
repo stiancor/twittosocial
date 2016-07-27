@@ -33,26 +33,7 @@
         <i class="icon-calendar"></i></p>
 
 
-      <p>
-        <span class="event-label">People:</span>
-      </p>
-      <ul class="event-attendees">
-        <li>
-          <%= form_for(@event.event_invites.find_by_user_id(current_user.id), html: {class: 'no-margin'}, remote: true) do |f| %>
-              You - <%= f.submit 'Join', class: 'submitLink' %>
-              -
-              <%= f.submit 'Maybe', class: 'submitLink' %>
-              -
-              <%= f.submit 'Decline', class: 'submitLink' %> -
-              <div id="event-reply-status-<%= @event.id %>" class='no_clear'><%= render partial: 'events/attend_status', locals: {status: @event.event_invites.find_by_user_id(current_user.id).attend_status} %> </div>
-          <% end %></li>
-        <% @event.event_invites.sort { |a, b| a.user.name.upcase <=> b.user.name.upcase }.each do |i| %>
-            <% unless current_user?(i.user) %>
-                <li><%= i.user.name %><span class="username">(@<%= i.user.username %>
-                  )<span> - <%= render partial: 'events/attend_status', locals: {status: i.attend_status} %></li>
-            <% end %>
-        <% end %>
-      </ul>
+      <%= render partial: 'events/attend_status_list' %>
 
       <p><span class="event-label">Invitation:</span>
 
@@ -76,25 +57,7 @@
     <% end %>
 
     <% unless @event.event_comments.empty? %>
-        <ul class="event_comments">
-          <% @event.event_comments.each do |c| %>
-              <li>
-                <%= link_to gravatar_for(c.user), c.user %>
-                <span class="user">
-                    <%= link_to c.user.name, c.user %>
-                  <span class="username">@<%= c.user.username %></span>
-                  <% if @user_rank[c.user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[c.user.id]) %>" title="Rank based on activity the latest month"></div><% end %>
-                </span>
-                <span class="content"><%= format_msg(c.content).html_safe %></span>
-                <span class="timestamp">
-                  Posted <%= time_ago_in_words c.created_at %> ago
-                </span>
-                <% if current_user?(c.user) %>
-                    <%= link_to 'delete', [@event, c], method: :delete, data: {confirm: 'Are you sure?'}, title: c.content %>
-                <% end %>
-              </li>
-          <% end %>
-        </ul>
+        <%= render partial: 'events/event_comment_list' %>
     <% end %>
   </div>
 </div>

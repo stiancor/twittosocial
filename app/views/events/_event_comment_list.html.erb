@@ -1,0 +1,19 @@
+<ul class="event_comments">
+  <% @event.event_comments.each do |c| %>
+      <li>
+        <%= link_to gravatar_for(c.user), c.user %>
+        <span class="user">
+                    <%= link_to c.user.name, c.user %>
+          <span class="username">@<%= c.user.username %></span>
+          <% if @user_rank[c.user.id] %> <div class="app-icon <%= rank_color_class(@user_rank[c.user.id]) %>" title="Rank based on activity the latest month"></div><% end %>
+                </span>
+        <span class="content"><%= format_msg(c.content).html_safe %></span>
+                <span class="timestamp">
+                  Posted <%= time_ago_in_words c.created_at %> ago
+                </span>
+        <% if current_user?(c.user) %>
+            <%= link_to 'delete', [@event, c], method: :delete, data: {confirm: 'Are you sure?'}, title: c.content %>
+        <% end %>
+      </li>
+  <% end %>
+</ul>
