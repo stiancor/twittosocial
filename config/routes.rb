@@ -23,17 +23,17 @@ SampleApp::Application.routes.draw do
 
   root to: 'static_pages#home'
 
-  match '/signup', to: 'users#new', via: 'get'
-  match '/forgotten_password', to: 'users#forgotten_password', via: 'get'
-  match '/send_password_link', to: 'users#send_password_link', via: 'get'
-  match '/reset_password/:uuid', to: 'users#show_reset_password', via: 'get'
-  match '/reset_password', to: 'users#reset_password', via: 'get'
-  match '/signin', to: 'sessions#new', via: 'get'
+  match '/signup', to: 'users#new', via: :get
+  match '/forgotten_password', to: 'users#forgotten_password', via: :get
+  match '/send_password_link', to: 'users#send_password_link', via: :post
+  match '/reset_password/:uuid', to: 'users#show_reset_password', via: :get
+  match '/reset_password', to: 'users#reset_password', via: :get
+  match '/signin', to: 'sessions#new', via: :get
   match '/signout', to: 'sessions#destroy', via: :delete
 
-  match '/help', to: 'static_pages#help', via: 'get'
-  match '/contact', to: 'static_pages#contact', via: 'get'
-  match '/about', to: 'static_pages#about', via: 'get'
+  match '/help', to: 'static_pages#help', via: :get
+  match '/contact', to: 'static_pages#contact', via: :get
+  match '/about', to: 'static_pages#about', via: :get
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
