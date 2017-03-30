@@ -27,7 +27,7 @@ SampleApp::Application.routes.draw do
   match '/forgotten_password', to: 'users#forgotten_password', via: :get
   match '/send_password_link', to: 'users#send_password_link', via: :post
   match '/reset_password/:uuid', to: 'users#show_reset_password', via: :get
-  match '/reset_password', to: 'users#reset_password', via: :get
+  match '/reset_password', to: 'users#reset_password', via: :post
   match '/signin', to: 'sessions#new', via: :get
   match '/signout', to: 'sessions#destroy', via: :delete
 
